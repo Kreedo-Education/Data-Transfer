@@ -19,7 +19,7 @@ There are two types of game's builds available for now: -
 Adding script in construct3 editor.
 ![image](https://user-images.githubusercontent.com/79310045/117129403-418abb80-adbc-11eb-96e5-c5a0155a9bcb.png)
 
-## Steps:
+## Steps to achieve two way comunication:
 1. Data Format (Common for all types of build).
 2. Data Listeners (Common for all types of build).
 3. Initialize the Game's Varibales.
