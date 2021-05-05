@@ -1,6 +1,8 @@
 # Data-Transfer
-This repository contains detailed information on data transfer from app to game and vice-versa.
-This is a two way communication [App to Game  & Game to App].
+This repository contains detailed information on data transfer from app to game and vice-versa.This is a two way communication [App to Game  & Game to App].
+
+This communication can be understood more clearly through this [PPT](https://docs.google.com/presentation/d/10nTF6JEUjx2hPdvR29nui6Qqlz_dpkey_omlIU9hsQM/edit?usp=sharing)
+
 There are two types of game's builds available for now: - 
 1. Unity Build 
 2. Construct3 Build
