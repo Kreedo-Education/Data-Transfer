@@ -1,7 +1,7 @@
 # Data-Transfer
 This repository contains detailed information on data transfer from app to game and vice-versa.
 This is a two way communication [App to Game  & Game to App].
-There are two types of game's builds avilable for now: - 
+There are two types of game's builds available for now: - 
 1. Unity Build 
 2. Construct3 Build
   
@@ -13,7 +13,7 @@ There are two types of game's builds avilable for now: -
 
   ### For Construct3 ###
    These are some steps that need to be followed for initial setup for Construct build
-   1. Add two scripts called main.js and script.js [refer to screenshots to know how to add them].
+   1. Add two scripts called main.js and script.js [refer to screenshots to know how to add them].  These files can also be found in exported html5 build at scripts/project/main.js & scripts/project/scriptsInEvents.js
    2. Open main.js and script.js in construct editor
 
 Adding script in construct3 editor.
@@ -296,7 +296,7 @@ IncorrectAttempts: runtime.globalVars.L4_IncorrectAttempts}
 
 }
 
-AppInterface.sendToApp(data);  // this functio implements the logic to push the data to app.
+AppInterface.sendToApp(data);  // implements the logic to push the data to app.
 
 ```
 
