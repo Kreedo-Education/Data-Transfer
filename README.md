@@ -1,7 +1,7 @@
 # Data-Transfer
 This repository contains detailed information on data transfer from app to game and vice-versa.
 This is a two way communication [App to Game  & Game to App].
-There are two types of game's builds avilable for now: - 
+There are two types of game's builds available for now: - 
 1. Unity Build 
 2. Construct3 Build
   
@@ -296,7 +296,7 @@ IncorrectAttempts: runtime.globalVars.L4_IncorrectAttempts}
 
 }
 
-AppInterface.sendToApp(data);  // this functio implements the logic to push the data to app.
+AppInterface.sendToApp(data);  // implements the logic to push the data to app.
 
 ```
 
