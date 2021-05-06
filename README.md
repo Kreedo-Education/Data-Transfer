@@ -250,54 +250,37 @@ function GetDataFromUnity( arg )
 ```
  => Call AppInterface.sendToApp(data) each time a progress/update donme in the game.
  => For We will require a Construct3 function as saveData() [refer to below Screenshot]  need to be called each time data changes in the game.
- 
- ![image](https://user-images.githubusercontent.com/79310045/117126680-bcea6e00-adb8-11eb-803b-b96a4dc61f8e.png)
+
+ ![image](https://user-images.githubusercontent.com/79310045/117241850-a47a6200-ae51-11eb-93b6-be3697d9a50c.png)
  The last line of saveData function calls AppInterface.sendToApp(data);  // this function implements the logic to push the data to app.
 This function contains following code:
 ```
+// localStorage.setItem(runtime.globalVars.GameName+"_Music", runtime.globalVars.isMusic);
 var data = {
-GameName:runtime.globalVars.GameName,
-GameID:runtime.globalVars.GameID,
-ChildID: runtime.globalVars.ChildID,
-AttemptID:runtime.globalVars.AttemptID,
-RewardPoints: runtime.globalVars.RewardPoints,
+gameName:runtime.globalVars.GameName,
+gameId:runtime.globalVars.GameID,
+childId: runtime.globalVars.ChildID,
+attemptId:runtime.globalVars.AttemptID,
+rewardPoints: runtime.globalVars.RewardPoints,
 isMusic: runtime.globalVars.isMusic,
-	Level0:
-  {Completed:runtime.globalVars.PresentationDone,
-	StartTime: runtime.globalVars.L0_START_TIME,
-	EndTime: runtime.globalVars.L0_END_TIME,
-	PlayCount: runtime.globalVars.L0_PLAY_COUNT	
+	level0:{completed:runtime.globalVars.PresentationDone,
+	startDate: runtime.globalVars.L0_START_TIME,
+	endDate: runtime.globalVars.L0_END_TIME,
+	playCount: runtime.globalVars.L0_PLAY_COUNT
+	
 },
-Level1: {PresentationDone: runtime.globalVars.L1TutorialDone, 
-Completed:runtime.globalVars.L1_Completed, 
-PlayCount: runtime.globalVars.L1_TotalTrial, 
-CurrentPlay: runtime.globalVars.L1_trial, 
-CorrectAttempts: runtime.globalVars.L1_correctAttempts, 
-IncorrectAttempts: runtime.globalVars.L1_IncorrectAttempts},
+	level1: {presentationDone: runtime.globalVars.L1TutorialDone, completed:runtime.globalVars.L1_Completed, playCount: runtime.globalVars.L1_TotalTrial, currentPlay: runtime.globalVars.L1_trial, correctAttempts: runtime.globalVars.L1_correctAttempts, incorrectAttempts: runtime.globalVars.L1_IncorrectAttempts},
 
-Level2:{PresentationDone: runtime.globalVars.L2TutorialDone,
-Completed:runtime.globalVars.L2_Completed, 
-PlayCount: runtime.globalVars.L2_TotalTrial,
-CurrentPlay: runtime.globalVars.L2_trial, 
-CorrectAttempts: runtime.globalVars.L2_correctAttempts, 
-IncorrectAttempts: runtime.globalVars.L2_IncorrectAttempts},
+level2:{presentationDone: runtime.globalVars.L2TutorialDone, completed:runtime.globalVars.L2_Completed, playCount: runtime.globalVars.L2_TotalTrial,
+currentPlay: runtime.globalVars.L2_trial, correctAttempts: runtime.globalVars.L2_correctAttempts, incorrectAttempts: runtime.globalVars.L2_IncorrectAttempts},
 
-Level3:{PresentationDone: runtime.globalVars.L3TutorialDone, 
-Completed:runtime.globalVars.L3_Completed,
-PlayCount: runtime.globalVars.L3_TotalTrial, 
-CurrentPlay: runtime.globalVars.L3_trial,
-CorrectAttempts: runtime.globalVars.L3_correctAttempts, 
-IncorrectAttempts: runtime.globalVars.L3_IncorrectAttempts},
+level3:{presentationDone: runtime.globalVars.L3TutorialDone, completed:runtime.globalVars.L3_Completed, playCount: runtime.globalVars.L3_TotalTrial, currentPlay: runtime.globalVars.L3_trial, correctAttempts: runtime.globalVars.L3_correctAttempts, incorrectAttempts: runtime.globalVars.L3_IncorrectAttempts},
 
-Level4:{PresentationDone: runtime.globalVars.L4TutorialDone,
-Completed:runtime.globalVars.L4_Completed,
-PlayCount: runtime.globalVars.L4_TotalTrial,
-CurrentPlay: runtime.globalVars.L4_trial,
-CorrectAttempts: runtime.globalVars.L4_correctAttempts,
-IncorrectAttempts: runtime.globalVars.L4_IncorrectAttempts}
+level4:{presentationDone: runtime.globalVars.L4TutorialDone, completed:runtime.globalVars.L4_Completed, playCount: runtime.globalVars.L4_TotalTrial,currentPlay: runtime.globalVars.L4_trial, correctAttempts: runtime.globalVars.L4_correctAttempts, incorrectAttempts: runtime.globalVars.L4_IncorrectAttempts}
 
 }
 
+//localStorage.setItem("pvq-data", JSON.stringify(data));
 AppInterface.sendToApp(data);  // implements the logic to push the data to app.
 
 ```
