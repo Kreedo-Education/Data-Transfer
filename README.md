@@ -249,7 +249,7 @@ function GetDataFromUnity( arg )
   }
 ```
  => Call AppInterface.sendToApp(data) each time a progress/update donme in the game.
- => For We will require a Construct3 function as saveData() [refer to below Screenshot]  need to be called each time data changes in the game.
+ => We will require a Construct3 function as saveData() [refer to below Screenshot]  need to be called each time data changes in the game.
 
  ![image](https://user-images.githubusercontent.com/79310045/117241850-a47a6200-ae51-11eb-93b6-be3697d9a50c.png)
  The last line of saveData function calls AppInterface.sendToApp(data);  // this function implements the logic to push the data to app.
