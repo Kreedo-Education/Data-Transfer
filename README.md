@@ -269,14 +269,33 @@ isMusic: runtime.globalVars.isMusic,
 	playCount: runtime.globalVars.L0_PLAY_COUNT
 	
 },
-	level1: {presentationDone: runtime.globalVars.L1TutorialDone, completed:runtime.globalVars.L1_Completed, playCount: runtime.globalVars.L1_TotalTrial, currentPlay: runtime.globalVars.L1_trial, correctAttempts: runtime.globalVars.L1_correctAttempts, incorrectAttempts: runtime.globalVars.L1_IncorrectAttempts},
+	level1: {presentationDone: runtime.globalVars.L1TutorialDone, 
+  completed:runtime.globalVars.L1_Completed, 
+  playCount: runtime.globalVars.L1_TotalTrial, 
+  currentPlay: runtime.globalVars.L1_trial, 
+  correctAttempts: runtime.globalVars.L1_correctAttempts, 
+  incorrectAttempts: runtime.globalVars.L1_IncorrectAttempts},
 
-level2:{presentationDone: runtime.globalVars.L2TutorialDone, completed:runtime.globalVars.L2_Completed, playCount: runtime.globalVars.L2_TotalTrial,
-currentPlay: runtime.globalVars.L2_trial, correctAttempts: runtime.globalVars.L2_correctAttempts, incorrectAttempts: runtime.globalVars.L2_IncorrectAttempts},
+level2:{presentationDone: runtime.globalVars.L2TutorialDone, 
+completed:runtime.globalVars.L2_Completed, 
+playCount: runtime.globalVars.L2_TotalTrial,
+currentPlay: runtime.globalVars.L2_trial, 
+correctAttempts: runtime.globalVars.L2_correctAttempts, 
+incorrectAttempts: runtime.globalVars.L2_IncorrectAttempts},
 
-level3:{presentationDone: runtime.globalVars.L3TutorialDone, completed:runtime.globalVars.L3_Completed, playCount: runtime.globalVars.L3_TotalTrial, currentPlay: runtime.globalVars.L3_trial, correctAttempts: runtime.globalVars.L3_correctAttempts, incorrectAttempts: runtime.globalVars.L3_IncorrectAttempts},
+level3:{presentationDone: runtime.globalVars.L3TutorialDone, 
+completed:runtime.globalVars.L3_Completed,
+ playCount: runtime.globalVars.L3_TotalTrial, 
+ currentPlay: runtime.globalVars.L3_trial, 
+ correctAttempts: runtime.globalVars.L3_correctAttempts, 
+ incorrectAttempts: runtime.globalVars.L3_IncorrectAttempts},
 
-level4:{presentationDone: runtime.globalVars.L4TutorialDone, completed:runtime.globalVars.L4_Completed, playCount: runtime.globalVars.L4_TotalTrial,currentPlay: runtime.globalVars.L4_trial, correctAttempts: runtime.globalVars.L4_correctAttempts, incorrectAttempts: runtime.globalVars.L4_IncorrectAttempts}
+level4:{presentationDone: runtime.globalVars.L4TutorialDone, 
+completed:runtime.globalVars.L4_Completed, 
+playCount: runtime.globalVars.L4_TotalTrial,
+currentPlay: runtime.globalVars.L4_trial, 
+correctAttempts: runtime.globalVars.L4_correctAttempts, 
+incorrectAttempts: runtime.globalVars.L4_IncorrectAttempts}
 
 }
 
