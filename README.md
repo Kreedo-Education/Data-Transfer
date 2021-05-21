@@ -143,9 +143,23 @@ Global Data List:
 7. completed: boolean [Whether game is completed, i.e all levels are unlocked]
 8. isMusic: boolean [Decides that whether to start the game with background music or not]
 
-Local Data List:
-
-
+Local Data List: These are nothing but the logs which are captured for each attempts for all levels
+``` 
+"level1":{
+            "presentation":{ // Level1 Tutorial
+                "completed":0, // booleab: whether the tutorial is completed or not 
+                "playCount":0, // number: no. of times tutorial has started.
+                "completedCount":0,// number: no. of times tutorial has completed.
+                "timeSpent":0 //number: no. of seconds spent in the level tutorial.
+            },
+            "completed":0, // boolean: Level is completed or not.
+            "playCount":0, // number: no. of times level has been started.
+            "completedCount":0, // number: no. of times level has been completed.
+            "timeSpent":0, // number: no. of seconds spent in the level.
+            "correctAttempts":0, // number: no. of correct tries made in the level.
+            "incorrectAttempts":0 // number: no. of incorrect tries made in the level.
+          }
+```
 
 ### 2. Data Listener ###
 Initial data fields will be coming from app to start the game. To catch the data comming from App's webview a listener will be required.
