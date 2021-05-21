@@ -2820,6 +2820,70 @@ runtime.SetDebuggingEnabled(false);for(const key of this._data.keys()){this._cur
 'use strict';{const C3=self.C3;C3.Plugins.Dictionary.Exps={Get(key){const ret=this._data.get(key);if(typeof ret==="undefined")return 0;else return ret},GetDefault(key,defaultValue){const ret=this._data.get(key);if(typeof ret==="undefined")return defaultValue;else return ret},KeyCount(){return this._data.size},CurrentKey(){return this._curKey},CurrentValue(){return this._data.get(this._curKey)||0},AsJSON(){return this.GetAsJsonString()}}};
 
 
+'use strict';{const C3=self.C3;C3.Plugins.AJAX=class AJAXPlugin extends C3.SDKPluginBase{constructor(opts){super(opts)}Release(){super.Release()}}};
+
+
+'use strict';{const C3=self.C3;C3.Plugins.AJAX.Type=class AJAXType extends C3.SDKTypeBase{constructor(objectClass){super(objectClass)}Release(){super.Release()}OnCreate(){}}};
+
+
+'use strict';{const C3=self.C3;C3.Plugins.AJAX.Instance=class AJAXInstance extends C3.SDKInstanceBase{constructor(inst,properties){super(inst);this._lastData="";this._curTag="";this._progress=0;this._timeout=-1;this._nextRequestHeaders=new Map;this._nextReponseBinaryData=null;this._nextRequestOverrideMimeType="";this._nwjsFs=null;this._nwjsPath=null;this._nwjsAppFolder=null;this._isNWjs=this._runtime.GetExportType()==="nwjs";if(this._isNWjs){this._nwjsFs=require("fs");this._nwjsPath=require("path");
+const process=self["process"]||nw["process"];this._nwjsAppFolder=this._nwjsPath["dirname"](process["execPath"])+"\\"}}Release(){super.Release()}async _TriggerError(tag,url,err){console.error(`[Construct 3] AJAX request to '${url}' (tag '${tag}') failed: `,err);this._curTag=tag;await this.TriggerAsync(C3.Plugins.AJAX.Cnds.OnAnyError);await this.TriggerAsync(C3.Plugins.AJAX.Cnds.OnError)}async _TriggerComplete(tag){this._curTag=tag;await this.TriggerAsync(C3.Plugins.AJAX.Cnds.OnAnyComplete);await this.TriggerAsync(C3.Plugins.AJAX.Cnds.OnComplete)}async _OnProgress(tag,
+e){if(!e["lengthComputable"])return;this._progress=e["loaded"]/e["total"];this._curTag=tag;await this.TriggerAsync(C3.Plugins.AJAX.Cnds.OnProgress)}_OnError(tag,url,err){if(!this._isNWjs){this._TriggerError(tag,url,err);return}const fs=this._nwjsFs;const filePath=this._nwjsAppFolder+url;if(fs["existsSync"](filePath))fs["readFile"](filePath,{"encoding":"utf8"},(err2,data)=>{if(err2)this._TriggerError(tag,url,err2);else{this._lastData=data.replace(/\r\n/g,"\n");this._TriggerComplete(tag)}});else this._TriggerError(tag,
+url,err)}async _DoCordovaRequest(tag,file){const assetManager=this._runtime.GetAssetManager();const binaryData=this._nextReponseBinaryData;this._nextReponseBinaryData=null;try{if(binaryData){const buffer=await assetManager.CordovaFetchLocalFileAsArrayBuffer(file);binaryData.SetArrayBufferTransfer(buffer);this._lastData="";this._TriggerComplete(tag)}else{const data=await assetManager.CordovaFetchLocalFileAsText(file);this._lastData=data.replace(/\r\n/g,"\n");this._TriggerComplete(tag)}}catch(err){this._TriggerError(tag,
+file,err)}}_DoRequest(tag,url,method,data){return new Promise(resolve=>{const errorFunc=err=>{this._OnError(tag,url,err);resolve()};const binaryData=this._nextReponseBinaryData;this._nextReponseBinaryData=null;try{const request=new XMLHttpRequest;request.onreadystatechange=()=>{if(request.readyState===4){if(binaryData)this._lastData="";else this._lastData=(request.responseText||"").replace(/\r\n/g,"\n");if(request.status>=400)this._TriggerError(tag,url,request.status+request.statusText);else{const hasData=
+this._lastData.length||binaryData&&request.response instanceof ArrayBuffer;if((!this._isNWjs||hasData)&&!(!this._isNWjs&&request.status===0&&!hasData)){if(binaryData)binaryData.SetArrayBufferTransfer(request.response);this._TriggerComplete(tag)}}resolve()}};request.onerror=errorFunc;request.ontimeout=errorFunc;request.onabort=errorFunc;request["onprogress"]=e=>this._OnProgress(tag,e);request.open(method,url);if(this._timeout>=0&&typeof request["timeout"]!=="undefined")request["timeout"]=this._timeout;
+request.responseType=binaryData?"arraybuffer":"text";if(data&&!this._nextRequestHeaders.has("Content-Type"))if(typeof data!=="string")request["setRequestHeader"]("Content-Type","application/octet-stream");else request["setRequestHeader"]("Content-Type","application/x-www-form-urlencoded");for(const [header,value]of this._nextRequestHeaders)try{request["setRequestHeader"](header,value)}catch(err){console.error(`[Construct 3] AJAX: Failed to set header '${header}: ${value}': `,err)}this._nextRequestHeaders.clear();
+if(this._nextRequestOverrideMimeType){try{request["overrideMimeType"](this._nextRequestOverrideMimeType)}catch(err){console.error(`[Construct 3] AJAX: failed to override MIME type: `,err)}this._nextRequestOverrideMimeType=""}if(data)request.send(data);else request.send()}catch(err){errorFunc(err)}})}GetDebuggerProperties(){const prefix="plugins.ajax.debugger";return[{title:prefix+".title",properties:[{name:prefix+".last-data",value:this._lastData}]}]}SaveToJson(){return{"lastData":this._lastData}}LoadFromJson(o){this._lastData=
+o["lastData"];this._curTag="";this._progress=0}}};
+
+
+'use strict';{const C3=self.C3;C3.Plugins.AJAX.Cnds={OnComplete(tag){return C3.equalsNoCase(this._curTag,tag)},OnAnyComplete(){return true},OnError(tag){return C3.equalsNoCase(this._curTag,tag)},OnAnyError(){return true},OnProgress(tag){return C3.equalsNoCase(this._curTag,tag)}}};
+
+
+'use strict';{const C3=self.C3;C3.Plugins.AJAX.Acts={async Request(tag,url){if(this._runtime.IsCordova()&&C3.IsRelativeURL(url)&&location.protocol==="file:")await this._DoCordovaRequest(tag,url);else if(this._runtime.IsPreview()&&C3.IsRelativeURL(url)){const localurl=this._runtime.GetAssetManager().GetLocalUrlAsBlobUrl(url.toLowerCase());await this._DoRequest(tag,localurl,"GET",null)}else await this._DoRequest(tag,url,"GET",null)},async RequestFile(tag,file){if(this._runtime.IsCordova()&&location.protocol===
+"file:")await this._DoCordovaRequest(tag,file);else await this._DoRequest(tag,this._runtime.GetAssetManager().GetLocalUrlAsBlobUrl(file),"GET",null)},async Post(tag,url,data,method){await this._DoRequest(tag,url,method,data)},async PostBinary(tag,url,objectClass,method){if(!objectClass)return;const target=objectClass.GetFirstPicked(this._inst);if(!target)return;const sdkInst=target.GetSdkInstance();const buffer=sdkInst.GetArrayBufferReadOnly();await this._DoRequest(tag,url,method,buffer)},SetTimeout(t){this._timeout=
+t*1E3},SetHeader(n,v){this._nextRequestHeaders.set(n,v)},SetResponseBinary(objectClass){if(!objectClass)return;const inst=objectClass.GetFirstPicked(this._inst);if(!inst)return;this._nextReponseBinaryData=inst.GetSdkInstance()},OverrideMIMEType(m){this._nextRequestOverrideMimeType=m}}};
+
+
+'use strict';{const C3=self.C3;C3.Plugins.AJAX.Exps={LastData(){return this._lastData},Progress(){return this._progress},Tag(){return this._curTag}}};
+
+
+'use strict';{const C3=self.C3;C3.Plugins.Json=class JSONPlugin extends C3.SDKPluginBase{constructor(opts){super(opts)}Release(){super.Release()}}};
+
+
+'use strict';{const C3=self.C3;C3.Plugins.Json.Type=class JSONType extends C3.SDKTypeBase{constructor(objectClass){super(objectClass)}Release(){super.Release()}OnCreate(){}}};
+
+
+'use strict';{const C3=self.C3;const IInstance=self.IInstance;C3.Plugins.Json.Instance=class JSONInstance extends C3.SDKInstanceBase{constructor(inst,properties){super(inst);this._valueCache=[null,null];this._locationCache=[null,null];this._data={};this._path=[];this._currentKey="";this._currentValue=0}Release(){super.Release()}_InvalidateValueCache(){this._valueCache[0]=null;this._valueCache[1]=null}_HasValueCache(arr,isMutate){const cacheArr=this._valueCache[0];if(arr===null||cacheArr===null)return false;
+if(cacheArr===arr||C3.arraysEqual(cacheArr,arr))return true;if(isMutate&&cacheArr.length>0){for(let i=0,len=Math.min(arr.length,cacheArr.length);i<len;++i)if(arr[i]!==cacheArr[i])return false;return true}else return false}_GetValueCache(){return this._valueCache[1]}_UpdateValueCache(arr,value){this._valueCache[0]=arr;this._valueCache[1]=value}_InvalidateLocationCache(){this._locationCache[0]=null;this._locationCache[1]=null}_HasLocationCache(str){return this._locationCache[0]===str}_GetLocationCache(){return this._locationCache[1]}_UpdateLocationCache(str,
+value){this._locationCache[0]=str;this._locationCache[1]=value}_SetData(obj){this._data=obj;this._InvalidateValueCache()}_GetData(){return this._data}_SetPath(str){this._path=this._ParsePathUnsafe(str);this._InvalidateLocationCache()}_ParsePath(str){return C3.cloneArray(this._ParsePathUnsafe(str))}_ParsePathUnsafe(str){const buffer=[];let escaped=false;let parts;if(this._HasLocationCache(str))return this._GetLocationCache();if(str[0]==="."){parts=C3.cloneArray(this._path);str=str.slice(1)}else parts=
+[];for(const c of str)if(escaped){buffer.push(c);escaped=false}else if(c==="\\")escaped=true;else if(c==="."){parts.push(buffer.join(""));C3.clearArray(buffer)}else buffer.push(c);if(buffer.length!==0)parts.push(buffer.join(""));this._UpdateLocationCache(str,parts);return parts}_GetValueAtFullPath(path,lazyCreate){if(this._HasValueCache(path,false))return this._GetValueCache();let result=this._data;for(const part of path)if(Array.isArray(result)){const index=parseInt(part,10);if(index<0||index>=result.length||
+!isFinite(index)){result=null;break}result=result[index]}else if(typeof result==="object"&&result!==null)if(result.hasOwnProperty(part))result=result[part];else if(lazyCreate){const o={};result[part]=o;result=o}else{result=null;break}else{result=null;break}this._UpdateValueCache(path,result);return result}_GetValue(str){const path=this._ParsePath(str);if(!path.length)return this._data;const key=path.pop();const obj=this._GetValueAtFullPath(path,false);if(Array.isArray(obj)){const index=parseInt(key,
+10);return index>=0&&index<obj.length?obj[index]:null}else if(typeof obj==="object"&&obj!==null)return obj.hasOwnProperty(key)?obj[key]:null;else return null}_JSONTypeOf(val){if(val===null)return"null";else if(Array.isArray(val))return"array";else return typeof val}_GetTypeOf(str){const val=this._GetValue(str);return this._JSONTypeOf(val)}_ToSafeValue(value){const type=typeof value;if(type==="number"||type==="string")return value;else if(type==="boolean")return value?1:0;else return 0}_GetSafeValue(str){return this._ToSafeValue(this._GetValue(str))}_HasKey(str){const path=
+this._ParsePath(str);if(!path.length)return false;const key=path.pop();const obj=this._GetValueAtFullPath(path,false);if(Array.isArray(obj)){const index=parseInt(key,10);return index>=0&&index<obj.length}else if(typeof obj==="object"&&obj!==null)return obj.hasOwnProperty(key);else return false}_SetValue(str,value){const path=this._ParsePath(str);if(!path.length)return false;if(this._HasValueCache(path,true))this._InvalidateValueCache();const key=path.pop();const obj=this._GetValueAtFullPath(path,
+true);if(Array.isArray(obj)){const index=parseInt(key,10);if(!isFinite(index)||index<0||index>=obj.length)return false;obj[index]=value;return true}else if(typeof obj==="object"&&obj!==null){obj[key]=value;return true}return false}_DeleteKey(str){const path=this._ParsePath(str);if(!path.length)return false;if(this._HasValueCache(path,true))this._InvalidateValueCache();const key=path.pop();const obj=this._GetValueAtFullPath(path,false);if(Array.isArray(obj))return false;else if(typeof obj==="object"&&
+obj!==null){delete obj[key];return true}else return false}SaveToJson(){return{"path":this._path,"data":this._data}}LoadFromJson(o){this._InvalidateValueCache();this._InvalidateLocationCache();this._path=o["path"];this._data=o["data"]}_SanitizeValue(val){const type=typeof val;if(type==="number"){if(!isFinite(val))return 0;return val}if(typeof val=="object")return JSON.stringify(val);return val+""}GetDebuggerProperties(){const prefix="plugins.json.debugger";let topLevelData;try{topLevelData=this._SanitizeValue(this._data)}catch(e){topLevelData=
+'"invalid"'}return[{title:prefix+".title",properties:[{name:prefix+".data",value:topLevelData,onedit:v=>{try{const n=JSON.parse(v);this._SetData(n)}catch(e){}}},{name:prefix+".path",value:this._path.map(seg=>seg.replace(/\./g,"\\.")).join(".")}]}]}GetScriptInterfaceClass(){return self.IJSONInstance}};const map=new WeakMap;self.IJSONInstance=class IJSONInstance extends IInstance{constructor(){super();map.set(this,IInstance._GetInitInst().GetSdkInstance())}getJsonDataCopy(){const data=map.get(this)._GetData();
+return JSON.parse(JSON.stringify(data))}setJsonDataCopy(o){try{const o2=JSON.parse(JSON.stringify(o));map.get(this)._SetData(o2)}catch(err){console.error("[JSON plugin] setJsonData: object is not valid JSON: ",err);throw err;}}setJsonString(str){try{const o=JSON.parse(str);map.get(this)._SetData(o)}catch(err){console.error("[JSON plugin] setJsonString: string is not valid JSON: ",err);throw err;}}toCompactString(){return JSON.stringify(map.get(this)._GetData())}toBeautifiedString(){return JSON.stringify(map.get(this)._GetData(),
+null,4)}}};
+
+
+'use strict';{const C3=self.C3;const JSON_TYPES=["null","boolean","number","string","object","array"];C3.Plugins.Json.Cnds={HasKey(str){return this._HasKey(str)},CompareType(str,typeIndex){return this._GetTypeOf(str)===JSON_TYPES[typeIndex]},CompareValue(str,cmp,value){return C3.compare(this._GetSafeValue(str),cmp,value)},IsBooleanSet(str){return this._GetValue(str)===true},ForEach(str){const value=this._GetValue(str);if(typeof value!=="object"||value===null)return false;const runtime=this._runtime;
+const eventSheetManager=runtime.GetEventSheetManager();const currentEvent=runtime.GetCurrentEvent();const solModifiers=currentEvent.GetSolModifiers();const eventStack=runtime.GetEventStack();const oldFrame=eventStack.GetCurrentStackFrame();const newFrame=eventStack.Push(currentEvent);const oldPath=this._path;const oldKey=this._currentKey;const oldValue=this._currentValue;const subPath=this._ParsePathUnsafe(str);runtime.SetDebuggingEnabled(false);for(const [k,v]of Object.entries(value)){this._path=
+C3.cloneArray(subPath);this._path.push(k);this._currentKey=k;this._currentValue=v;eventSheetManager.PushCopySol(solModifiers);currentEvent.Retrigger(oldFrame,newFrame);eventSheetManager.PopSol(solModifiers)}runtime.SetDebuggingEnabled(true);this._path=oldPath;this._currentKey=oldKey;this._currentValue=oldValue;eventStack.Pop();return false},OnParseError(){return true}}};
+
+
+'use strict';{const C3=self.C3;C3.Plugins.Json.Acts={Parse(str){try{this._SetData(JSON.parse(str))}catch(err){console.warn("[JSON plugin] Failed to parse JSON data: ",err);this._SetData({});this.Trigger(C3.Plugins.Json.Cnds.OnParseError)}},SetPath(str){this._SetPath(str)},SetValue(str,value){this._SetValue(str,value)},SetArray(str,size){let value=this._GetValue(str);if(Array.isArray(value))C3.resizeArray(value,size,0);else{value=[];C3.extendArray(value,size,0);this._SetValue(str,value)}},SetObject(str){this._SetValue(str,
+{})},SetJSON(location,value){let obj=null;try{obj=JSON.parse(value)}catch(err){console.warn("[JSON plugin] Failed to parse JSON data: ",err);this.Trigger(C3.Plugins.Json.Cnds.OnParseError)}this._SetValue(location,obj)},SetNull(str){this._SetValue(str,null)},SetBoolean(str,value){this._SetValue(str,value!==0)},ToggleBoolean(str){const value=this._GetValue(str);if(typeof value==="boolean")this._SetValue(str,!value)},AddTo(str,inc){const value=this._GetValue(str);if(typeof value==="number")this._SetValue(str,
+value+inc)},SubtractFrom(str,dec){const value=this._GetValue(str);if(typeof value==="number")this._SetValue(str,value-dec)},DeleteKey(str){this._DeleteKey(str)},PushValue(side,str,value){const parent=this._GetValue(str);if(Array.isArray(parent))side===0?parent.push(value):parent.unshift(value)},PopValue(side,str){const parent=this._GetValue(str);if(Array.isArray(parent))side===0?parent.pop():parent.shift()},InsertValue(value,str,index){const parent=this._GetValue(str);if(Array.isArray(parent))parent.splice(index,
+0,value)},RemoveValues(count,str,index){const parent=this._GetValue(str);if(Array.isArray(parent))parent.splice(index,count)}}};
+
+
+'use strict';{const C3=self.C3;C3.Plugins.Json.Exps={ToCompactString(){try{return JSON.stringify(this._data)}catch(err){return""}},ToBeautifiedString(){try{return JSON.stringify(this._data,null,4)}catch(err){return""}},Get(str){return this._GetSafeValue(str)},GetAsCompactString(str){const value=this._GetValue(str);return JSON.stringify(value)},GetAsBeautifiedString(str){const value=this._GetValue(str);return JSON.stringify(value,null,4)},Front(str){const parent=this._GetValue(str);if(Array.isArray(parent)){const value=
+parent[0];return this._ToSafeValue(value)}else return-1},Back(str){const parent=this._GetValue(str);if(Array.isArray(parent)){const value=parent[parent.length-1];return this._ToSafeValue(value)}else return-1},Type(str){return this._GetTypeOf(str)},ArraySize(str){const value=this._GetValue(str);if(Array.isArray(value))return value.length;else return-1},Path(){return this._path.map(seg=>seg.replace(/\./g,"\\.")).join(".")},CurrentKey(){return this._currentKey},CurrentValue(){return this._ToSafeValue(this._currentValue)},
+CurrentType(){return this._JSONTypeOf(this._currentValue)}}};
+
+
 'use strict';{const C3=self.C3;C3.Plugins.TiledBg=class TiledBgPlugin extends C3.SDKPluginBase{constructor(opts){super(opts)}Release(){super.Release()}}};
 
 
@@ -5183,6 +5247,8 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 		C3.Plugins.Browser,
 		C3.Plugins.Arr,
 		C3.Plugins.Dictionary,
+		C3.Plugins.AJAX,
+		C3.Plugins.Json,
 		C3.Plugins.TiledBg,
 		C3.Plugins.Text,
 		C3.Behaviors.Tween,
@@ -5198,7 +5264,7 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 		C3.Plugins.System.Cnds.OnLayoutStart,
 		C3.Plugins.Sprite.Acts.AddChild,
 		C3.Plugins.Sprite.Acts.SetPos,
-		C3.ScriptsInEvents.Egame_Event1_Act8,
+		C3.ScriptsInEvents.Egame_Event1_Act9,
 		C3.Plugins.System.Cnds.CompareBoolVar,
 		C3.Plugins.Audio.Cnds.IsTagPlaying,
 		C3.Plugins.Audio.Acts.StopAll,
@@ -5206,26 +5272,27 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 		C3.Plugins.Sprite.Acts.SetBoolInstanceVar,
 		C3.Plugins.Sprite.Acts.SetAnimFrame,
 		C3.Plugins.System.Cnds.Else,
-		C3.ScriptsInEvents.Egame_Event4_Act1,
 		C3.Plugins.System.Acts.SetVar,
 		C3.Plugins.System.Exps.viewportleft,
 		C3.Plugins.System.Exps.viewportright,
 		C3.Plugins.System.Exps.viewporttop,
 		C3.Plugins.System.Exps.viewportbottom,
+		C3.Plugins.Json.Acts.SetValue,
+		C3.Plugins.System.Cnds.CompareVar,
+		C3.ScriptsInEvents.Egame_Event11_Act1,
 		C3.Plugins.System.Cnds.For,
 		C3.Plugins.Audio.Acts.Stop,
 		C3.Plugins.System.Exps.loopindex,
 		C3.Plugins.System.Acts.SetTimescale,
 		C3.Plugins.System.Acts.SetGroupActive,
 		C3.Behaviors.DragnDrop.Acts.SetEnabled,
-		C3.Plugins.System.Cnds.CompareVar,
 		C3.Plugins.Audio.Acts.SetPaused,
 		C3.Plugins.Arr.Cnds.PickByUID,
 		C3.Plugins.Arr.Exps.Width,
 		C3.Plugins.System.Exps.random,
 		C3.Plugins.Arr.Exps.At,
 		C3.Plugins.Arr.Acts.SetX,
-		C3.ScriptsInEvents.Egame_Event20_Act1,
+		C3.ScriptsInEvents.Egame_Event33_Act1,
 		C3.Plugins.System.Cnds.While,
 		C3.Plugins.System.Acts.AddVar,
 		C3.Plugins.System.Acts.SetFunctionReturnValue,
@@ -5266,7 +5333,9 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 		C3.Plugins.Text.Acts.SetText,
 		C3.Plugins.Browser.Exps.ExecJS,
 		C3.Plugins.Audio.Cnds.OnEnded,
-		C3.ScriptsInEvents.Etutorial_Event4_Act2,
+		C3.Plugins.System.Exps.max,
+		C3.ScriptsInEvents.Etutorial_Event4_Act4,
+		C3.ScriptsInEvents.Etutorial_Event5_Act1,
 		C3.Plugins.System.Acts.RestartLayout,
 		C3.Plugins.Sprite.Acts.Destroy,
 		C3.Behaviors.DragnDrop.Cnds.IsDragging,
@@ -5369,6 +5438,8 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 		{OrderedQuantities_10s_L3: 0},
 		{OrderedQuantities_100s_L3: 0},
 		{Data: 0},
+		{AJAX: 0},
+		{JSON2: 0},
 		{id: 0},
 		{Progress: 0},
 		{progressbarL4: 0},
@@ -5466,6 +5537,7 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 		{Timeline: 0},
 		{LocalStorage: 0},
 		{quantity_hitarea: 0},
+		{JSON: 0},
 		{Buttons: 0},
 		{DragDrop: 0},
 		{qunatities: 0},
@@ -5483,12 +5555,16 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 		{L1_TotalTrial: 0},
 		{L1_IncorrectAttempts: 0},
 		{L1_correctAttempts: 0},
-		{L1_Play_Count: 0},
 		{L1TutorialDone: 0},
 		{L1_HintWatching: 0},
 		{L1_Tutorial_Watching: 0},
-		{L1_Start_Time: 0},
-		{L1_End_Time: 0},
+		{L1_PlayCount: 0},
+		{L1_StartTime: 0},
+		{L1_EndTime: 0},
+		{L1_TimeSpent: 0},
+		{L1_Tutorial_TimeSpent: 0},
+		{L1_TutorialCount: 0},
+		{L1_Tutorial_Completed_Count: 0},
 		{L3_trial: 0},
 		{L3_TotalTrial: 0},
 		{L3_Completed: 0},
@@ -5498,6 +5574,11 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 		{L3_HintWatching: 0},
 		{L3_Tutorial_Watching: 0},
 		{L3_Incorrect_Drag_Drop: 0},
+		{L3_PlayCount: 0},
+		{L3_TimeSpent: 0},
+		{L3_TutorialCount: 0},
+		{L3_Tutorial_Completed_Count: 0},
+		{L3_Tutorial_TimeSpent: 0},
 		{L2_trial: 0},
 		{L2_TotalTrial: 0},
 		{L2_Completed: 0},
@@ -5507,6 +5588,11 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 		{L2_HintWatching: 0},
 		{L2_Tutorial_Watching: 0},
 		{L2_Incorrect_Drag_Drop: 0},
+		{L2_TimeSpent: 0},
+		{L2_PlayCount: 0},
+		{L2_Tutorial_TimeSpent: 0},
+		{L2_TutorialCount: 0},
+		{L2_Tutorial_Completed_Count: 0},
 		{L4_trial: 0},
 		{L4_TotalTrial: 0},
 		{L4_Completed: 0},
@@ -5517,19 +5603,22 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 		{L4_HintWatching: 0},
 		{L4_Tutorial_Watching: 0},
 		{L4_Incorrect_Drag_Drop: 0},
+		{L4_Time_Spent: 0},
+		{L4_PlayCount: 0},
+		{L4_Tutorial_Completed_Count: 0},
+		{L4_TutorialCount: 0},
+		{L4_Tutorial_TimeSpent: 0},
 		{GameName: 0},
 		{GameID: 0},
 		{ChildID: 0},
 		{AttemptID: 0},
 		{L0_START_TIME: 0},
 		{L0_END_TIME: 0},
-		{L0_PLAY_COUNT: 0},
 		{RandomNumber: 0},
-		{PresentationDone: 0},
 		{currentLayout: 0},
 		{CurrentLevel: 0},
-		{CompletedLevels: 0},
-		{CompletedGame: 0},
+		{GameLevel: 0},
+		{isGameCompleted: 0},
 		{CorrectAttemptsL1: 0},
 		{IncorrectAttemptsL1: 0},
 		{CorrectAttemptsL2: 0},
@@ -5558,9 +5647,25 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 		{currentBgMusic: 0},
 		{CurrentInstruction: 0},
 		{currentGlobalAudio: 0},
-		{ActiveTimer: 0},
+		{audioReaplayTimer: 0},
 		{music_temp: 0},
+		{L0TutorialDone: 0},
+		{L0_TimeSpent: 0},
+		{L0_PlayCount: 0},
+		{L0_TotatTrial: 0},
+		{isActive: 0},
+		{activeCounter: 0},
+		{GameCompletedCounter: 0},
+		{isGamePresentatinCompleted: 0},
 		{jsonData: 0},
+		{incorrect_key: 0},
+		{correct_key: 0},
+		{play_count_key: 0},
+		{completed_count_key: 0},
+		{time_spent_key: 0},
+		{tutorial_time_spent_key: 0},
+		{tutorial_count_key: 0},
+		{tutorial_comleted_count_key: 0},
 		{pause: 0},
 		{tempItem: 0},
 		{rand_index: 0},
@@ -5722,6 +5827,48 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 			const v1 = p._GetNode(1).GetVar();
 			return () => ((v0.GetValue() + v1.GetValue()) / 2);
 		},
+		() => ".gameId",
+		() => ".attemptId",
+		() => ".gameName",
+		() => ".totalRewards",
+		() => ".isMusic",
+		() => "levelDetails.currentLevel.level",
+		p => {
+			const v0 = p._GetNode(0).GetVar();
+			return () => (and("levelDetails.level", v0.GetValue()) + ".correctAttempts");
+		},
+		p => {
+			const v0 = p._GetNode(0).GetVar();
+			return () => (and("levelDetails.level", v0.GetValue()) + ".incorrectAttempts");
+		},
+		p => {
+			const v0 = p._GetNode(0).GetVar();
+			return () => (and("levelDetails.level", v0.GetValue()) + ".playCount");
+		},
+		p => {
+			const v0 = p._GetNode(0).GetVar();
+			return () => (and("levelDetails.level", v0.GetValue()) + ".completedCount");
+		},
+		p => {
+			const v0 = p._GetNode(0).GetVar();
+			return () => (and("levelDetails.level", v0.GetValue()) + ".timeSpent");
+		},
+		p => {
+			const v0 = p._GetNode(0).GetVar();
+			return () => (and("levelDetails.level", v0.GetValue()) + ".presentation.playCount");
+		},
+		p => {
+			const v0 = p._GetNode(0).GetVar();
+			return () => (and("levelDetails.level", v0.GetValue()) + ".presentation.completedCount");
+		},
+		p => {
+			const v0 = p._GetNode(0).GetVar();
+			return () => (and("levelDetails.level", v0.GetValue()) + ".presentation.timeSpent");
+		},
+		() => 2,
+		() => 3,
+		() => 4,
+		() => "levelDetails.currentLevel.presentationCompleted",
 		() => "",
 		() => 44,
 		p => {
@@ -5775,7 +5922,6 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 			const v0 = p._GetNode(0).GetVar();
 			return () => (v0.GetValue() / 10);
 		},
-		() => 2,
 		() => "LevelCompletionSound",
 		() => 427,
 		() => 240,
@@ -5793,7 +5939,6 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 		() => "opacity",
 		() => 100,
 		() => 0.3,
-		() => 3,
 		p => {
 			const v0 = p._GetNode(0).GetVar();
 			const v1 = p._GetNode(1).GetVar();
@@ -5829,7 +5974,6 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 		},
 		() => "L2HintSave",
 		() => "L3HintSave",
-		() => 4,
 		() => "L4HintSave",
 		p => {
 			const v0 = p._GetNode(0).GetVar();
@@ -5859,6 +6003,15 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 		() => 19,
 		() => -5,
 		() => 15,
+		() => 120,
+		() => "levelDetails.level0.presentation.timeSpent",
+		() => "levelDetails.level1.timeSpent",
+		() => "levelDetails.level1.presentation.timeSpent",
+		() => "levelDetails.level2.timeSpent",
+		() => "levelDetails.level2.presentation.timeSpent",
+		() => "levelDetails.level3.timeSpent",
+		() => "levelDetails.level3.presentation.timeSpent",
+		() => "levelDetails.level4.timeSpent",
 		() => "L1TutorialPlay",
 		p => {
 			const v0 = p._GetNode(0).GetVar();
@@ -5886,14 +6039,12 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 		},
 		() => "PVQ_A_L0_2",
 		() => "L0TutorialButtons",
-		() => "Level1",
-		() => "Level1_Tutorial",
-		() => "Level2",
-		() => "Leve2_Tutorial",
-		() => "Level3",
-		() => "Level3_Tutorial",
-		() => "Level4",
-		() => "Level4_Tutorial",
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			const v1 = p._GetNode(1).GetVar();
+			const v2 = p._GetNode(2).GetVar();
+			return () => f0(v1.GetValue(), (v2.GetValue() + 1));
+		},
 		() => "L0TutorialPlay",
 		() => "Default",
 		p => {
@@ -5976,6 +6127,7 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 		() => "Confetti",
 		() => 316,
 		() => 520,
+		() => "levelDetails.level0.presentation.completed",
 		p => {
 			const v0 = p._GetNode(0).GetVar();
 			return () => ("GL_A_3" + v0.GetValue());
@@ -6188,6 +6340,7 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 			return () => ("GL_A_4" + v0.GetValue());
 		},
 		() => "GL_A_4",
+		() => "levelDetails.level1.completed",
 		p => {
 			const v0 = p._GetNode(0).GetVar();
 			return () => (v0.GetValue() + 130);
@@ -6258,14 +6411,7 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 			return () => ("PVQ_A_L1_7" + v0.GetValue());
 		},
 		() => "PVQ_A_L1_7",
-		p => {
-			const v0 = p._GetNode(0).GetVar();
-			return () => (v0.GetValue() + 95);
-		},
-		p => {
-			const v0 = p._GetNode(0).GetVar();
-			return () => (v0.GetValue() - 35);
-		},
+		() => "levelDetails.level1.presentation.completed",
 		p => {
 			const v0 = p._GetNode(0).GetVar();
 			return () => ("GL_A_19" + v0.GetValue());
@@ -6350,6 +6496,7 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 		},
 		() => "PVQ_A_L2_55",
 		() => "100s",
+		() => "levelDetails.level2.presentation.completed",
 		() => "out1",
 		() => "L2TutorialMusicPlayBack",
 		p => {
@@ -6454,6 +6601,7 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 		() => "L2Tweens",
 		() => 250,
 		() => "Down",
+		() => "levelDetails.level2.completed",
 		p => {
 			const v0 = p._GetNode(0).GetVar();
 			return () => ("PVQ_A_L3_1" + v0.GetValue());
@@ -6486,10 +6634,12 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 			return () => ("PVQ_A_L3_58" + v0.GetValue());
 		},
 		() => "PVQ_A_L3_58",
+		() => "levelDetails.level3.presentation.completed",
 		() => "L3TutorialTweens",
 		() => "L3TutorialMusicPlayBack",
 		() => "L3GamePlay",
 		() => "L3TutorialSave",
+		() => "levelDetails.level3.completed",
 		() => "L3Functions",
 		() => 38,
 		p => {
@@ -6539,6 +6689,7 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 			const v0 = p._GetNode(0).GetVar();
 			return () => ("PVQ_A_L4_30" + v0.GetValue());
 		},
+		() => "levelDetails.level4.presentation.completed",
 		() => "Open",
 		p => {
 			const n0 = p._GetNode(0);
@@ -6551,6 +6702,7 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 		() => "L4TutotrialButtons",
 		() => "L4GamePlay",
 		() => "L4TutorialSave",
+		() => "levelDetails.level4.completed",
 		() => "L4",
 		() => "L4Functions",
 		() => 483,
