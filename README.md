@@ -39,53 +39,113 @@ We will be looking into all four tasks one by one.
  ``` 
  {
    "data":{
-      "gameName":"Place VAlue Quantities",
-      "gameId":"GL_PVQ",
-      "childId":"CHILD_01",
-      "attemptId":"ATPT_01",
-      "rewardPoints":0,
-      "isMusic":1,
-      "level0":{
-         "completed":0,
-         "startDate":"",
-         "endDate":"",
-         "playCount":0
-      },
-      "level1":{
-         "presentationDone":0,
-         "completed":0,
-         "playCount":0,
-         "currentPlay":0,
-         "correctAttempts":0,
-         "incorrectAttempts":0
-      },
-      "level2":{
-         "presentationDone":0,
-         "completed":0,
-         "playCount":0,
-         "currentPlay":0,
-         "correctAttempts":0,
-         "incorrectAttempts":0
-      },
-      "level3":{
-         "presentationDone":0,
-         "completed":0,
-         "playCount":0,
-         "currentPlay":0,
-         "correctAttempts":0,
-         "incorrectAttempts":0
-      },
-      "level4":{
-         "presentationDone":0,
-         "completed":0,
-         "playCount":0,
-         "currentPlay":0,
-         "correctAttempts":0,
-         "incorrectAttempts":0
+      "learningTrackid":1,
+      "gameId":1,
+      "gameVersion":"string",
+      "predGameId":0,
+      "gamePath":"https://kreedo-game-upload-poc.s3.us-east-2.amazonaws.com/701_LearningTeens.zip",
+      "isActive":true,
+      "isblocked":false,
+      "isGameDownloadComplete":true,
+      "gameName":"Place Value Quantities",
+      "attemptId":0,
+      "totalRewards":0,
+      "completedCount":0,
+      "startDateTime":"",
+      "endDateTime":"",
+      "completed":false,
+      "isMusic":true,
+      "levelDetails":{
+          "currentLevel":{
+            "level":0,
+            "presentationCompleted":0
+          },
+          "level0":{
+            "presentation":{
+                "completed":0,
+                "playCount":0,
+                "completedCount":0,
+                "timeSpent":0
+            }
+          },
+          "level1":{
+            "presentation":{
+                "completed":0,
+                "playCount":0,
+                "completedCount":0,
+                "timeSpent":0
+            },
+            "completed":0,
+            "playCount":0,
+            "completedCount":0,
+            "timeSpent":0,
+            "correctAttempts":0,
+            "incorrectAttempts":0
+          },
+          "level2":{
+            "presentation":{
+                "completed":0,
+                "playCount":0,
+                "completedCount":0,
+                "timeSpent":0
+            },
+            "completed":0,
+            "playCount":0,
+            "completedCount":0,
+            "timeSpent":0,
+            "correctAttempts":0,
+            "incorrectAttempts":0
+          },
+          "level3":{
+            "presentation":{
+                "completed":0,
+                "playCount":0,
+                "completedCount":0,
+                "timeSpent":0
+            },
+            "completed":0,
+            "playCount":0,
+            "completedCount":0,
+            "timeSpent":0,
+            "correctAttempts":0,
+            "incorrectAttempts":0
+          },
+          "level4":{
+            "presentation":{
+                "completed":0,
+                "playCount":0,
+                "completedCount":0,
+                "timeSpent":0
+            },
+            "completed":0,
+            "playCount":0,
+            "completedCount":0,
+            "timeSpent":0,
+            "correctAttempts":0,
+            "incorrectAttempts":0
+          }
       }
-   }
+    }
 }
 ```
+## Data Fields
+There are two types of data fields being captured here:
+#### 1. Global Data:- These are used to resume the game
+#### 2. Local Data:- These are used for reporting purpose.
+
+Global Data List:
+1. gameName: string [:Contains the name of the game]
+2. attemptId: number [Contains the attempt Id]
+3. totalRewards: number [Total rewards points accumulated till now includes all replays ]
+4. completedCount: number [No. of times a game was completed, i.e all levels are completed]
+5. startDateTime: string [The date an attempt starts]
+6. endDateTime: string [The date an attempt ends]
+7. completed: boolean [Whether game is completed, i.e all levels are unlocked]
+8. isMusic: boolean [Decides that whether to start the game with background music or not]
+
+Local Data List:
+
+
 
 ### 2. Data Listener ###
 Initial data fields will be coming from app to start the game. To catch the data comming from App's webview a listener will be required.

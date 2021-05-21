@@ -37,6 +37,7 @@ runOnStartup(async runtime =>
 	}
 	if(messageData){
 		console.log("loaded data: ", JSON.stringify(messageData));
+		messageData.completedCount = 0;
 		messageData.levelDetails.level0 = levelDetails.level0;
 		messageData.levelDetails.level1 = levelDetails.level1;
 		messageData.levelDetails.level2 = levelDetails.level2;
@@ -51,11 +52,9 @@ runOnStartup(async runtime =>
 		runtime.globalVars.RewardPoints = messageData.totalRewards;
 		runtime.globalVars.isMusic = messageData.isMusic;		
         runtime.globalVars.isGameCompleted = messageData.completed;
-		runtime.globalVars.GameCompletedCounter = messageData.completedCount;
-		//current level
+		runtime.globalVars.GameCompletedCounter = 0;
 		runtime.globalVars.GameLevel = messageData.levelDetails.currentLevel.level;
-// 		runtime.globalVars.isGamePresentatinCompleted = messageData.levelDetails.currentLevel.presentationCompleted;
-		
+	
         if(runtime.globalVars.isGameCompleted)
         {
             runtime.globalVars.L4TutorialDone = 1
