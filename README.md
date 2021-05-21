@@ -4,8 +4,8 @@ This repository contains detailed information on data transfer from app to game 
 This communication can be understood more clearly through this [PPT](https://docs.google.com/presentation/d/10nTF6JEUjx2hPdvR29nui6Qqlz_dpkey_omlIU9hsQM/edit?usp=sharing)
 
 There are two types of game's builds available for now: - 
-1. Unity Build 
-2. Construct3 Build
+1. [Unity Build](https://kreedo-education.github.io/Data-Transfer/Unity%20Build/demo.zip)
+2. [Construct3 Build ](https://kreedo-education.github.io/Data-Transfer/Construct3%20Build/place_value_quantities.zip)
   
 ## Initial Set-Up for each build
   ### For Unity ###
