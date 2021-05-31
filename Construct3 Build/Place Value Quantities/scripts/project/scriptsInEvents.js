@@ -44,7 +44,7 @@ export class AppInterface  {
 			AppInterface.sendToApp(runtime.getInstanceByUid(486).getJsonDataCopy());
 		},
 
-		async Egame_Event12_Act4(runtime, localVars)
+		async Egame_Event12_Act5(runtime, localVars)
 		{
 			localStorage.setItem("pvq-data", JSON.stringify(runtime.getInstanceByUid(486).getJsonDataCopy()));
 			AppInterface.sendToApp(runtime.getInstanceByUid(488).getJsonDataCopy())

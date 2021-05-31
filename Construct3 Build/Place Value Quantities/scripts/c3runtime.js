@@ -3369,11 +3369,12 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 		C3.Plugins.Json.Acts.SetValue,
 		C3.Plugins.System.Cnds.CompareVar,
 		C3.ScriptsInEvents.Egame_Event11_Act1,
+		C3.Plugins.Browser.Exps.ExecJS,
 		C3.Plugins.Json.Acts.SetJSON,
 		C3.Plugins.Json.Exps.GetAsCompactString,
 		C3.Plugins.Browser.Acts.ConsoleLog,
 		C3.Plugins.Json.Exps.GetAsBeautifiedString,
-		C3.ScriptsInEvents.Egame_Event12_Act4,
+		C3.ScriptsInEvents.Egame_Event12_Act5,
 		C3.Plugins.Browser.Acts.Close,
 		C3.Plugins.System.Cnds.For,
 		C3.Plugins.Audio.Acts.Stop,
@@ -3430,7 +3431,6 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 		C3.Plugins.Browser.Acts.RequestFullScreen,
 		C3.Behaviors.Anchor.Acts.SetEnabled,
 		C3.Plugins.Text.Acts.SetText,
-		C3.Plugins.Browser.Exps.ExecJS,
 		C3.Plugins.Audio.Cnds.OnEnded,
 		C3.Plugins.System.Exps.max,
 		C3.ScriptsInEvents.Etutorial_Event4_Act4,
@@ -3970,6 +3970,11 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 		() => 2,
 		() => 3,
 		() => 4,
+		() => "endDateTime",
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			return () => f0("Date()");
+		},
 		() => "home",
 		() => "gameData",
 		p => {
@@ -4135,10 +4140,6 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 			return () => (v0.GetValue() - 114);
 		},
 		() => 0.5,
-		p => {
-			const f0 = p._GetNode(0).GetBoundMethod();
-			return () => f0("Date()");
-		},
 		() => 0.8,
 		p => {
 			const v0 = p._GetNode(0).GetVar();
