@@ -3,9 +3,14 @@
 export class AppInterface  {
 
 	static showToast(msg){
-        console.log('showToast', msg);
-		if(typeof(Android)!="undefined")
-         Android.showToast(msg);
+		let jsonToast = {};
+			jsonToast.toast = msg;
+        console.log('showToast', jsonToast);
+		   if (window && window.ReactNativeWebView) {
+		   
+			window.ReactNativeWebView.postMessage(jsonToast);
+		}
+		
 	}
 	static sendToApp(data){		
 		let json_str = JSON.stringify(data);
@@ -39,7 +44,13 @@ export class AppInterface  {
 			AppInterface.sendToApp(runtime.getInstanceByUid(486).getJsonDataCopy());
 		},
 
-		async Egame_Event33_Act1(runtime, localVars)
+		async Egame_Event12_Act4(runtime, localVars)
+		{
+			localStorage.setItem("pvq-data", JSON.stringify(runtime.getInstanceByUid(486).getJsonDataCopy()));
+			AppInterface.sendToApp(runtime.getInstanceByUid(488).getJsonDataCopy())
+		},
+
+		async Egame_Event34_Act1(runtime, localVars)
 		{
 			
 		},

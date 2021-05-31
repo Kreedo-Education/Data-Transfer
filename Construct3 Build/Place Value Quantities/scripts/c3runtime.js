@@ -3369,6 +3369,12 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 		C3.Plugins.Json.Acts.SetValue,
 		C3.Plugins.System.Cnds.CompareVar,
 		C3.ScriptsInEvents.Egame_Event11_Act1,
+		C3.Plugins.Json.Acts.SetJSON,
+		C3.Plugins.Json.Exps.GetAsCompactString,
+		C3.Plugins.Browser.Acts.ConsoleLog,
+		C3.Plugins.Json.Exps.GetAsBeautifiedString,
+		C3.ScriptsInEvents.Egame_Event12_Act4,
+		C3.Plugins.Browser.Acts.Close,
 		C3.Plugins.System.Cnds.For,
 		C3.Plugins.Audio.Acts.Stop,
 		C3.Plugins.System.Exps.loopindex,
@@ -3381,7 +3387,7 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 		C3.Plugins.System.Exps.random,
 		C3.Plugins.Arr.Exps.At,
 		C3.Plugins.Arr.Acts.SetX,
-		C3.ScriptsInEvents.Egame_Event33_Act1,
+		C3.ScriptsInEvents.Egame_Event34_Act1,
 		C3.Plugins.System.Cnds.While,
 		C3.Plugins.System.Acts.AddVar,
 		C3.Plugins.System.Acts.SetFunctionReturnValue,
@@ -3404,8 +3410,8 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 		C3.Plugins.Sprite.Acts.MoveToTop,
 		C3.Plugins.System.Cnds.ForEach,
 		C3.Plugins.Sprite.Cnds.IsBoolInstanceVarSet,
-		C3.Plugins.System.Cnds.IsGroupActive,
 		C3.Plugins.Touch.Cnds.OnTapGestureObject,
+		C3.Plugins.System.Cnds.IsGroupActive,
 		C3.Plugins.System.Acts.SetBoolVar,
 		C3.Plugins.System.Acts.SaveState,
 		C3.Plugins.Sprite.Acts.SetOpacity,
@@ -3759,6 +3765,7 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 		{tutorial_time_spent_key: 0},
 		{tutorial_count_key: 0},
 		{tutorial_comleted_count_key: 0},
+		{SaveAndExit: 0},
 		{pause: 0},
 		{tempItem: 0},
 		{rand_index: 0},
@@ -3963,6 +3970,16 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 		() => 2,
 		() => 3,
 		() => 4,
+		() => "home",
+		() => "gameData",
+		p => {
+			const n0 = p._GetNode(0);
+			return () => n0.ExpObject(".");
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			return () => ("Home Clicked: " + n0.ExpObject("."));
+		},
 		() => "levelDetails.currentLevel.presentationCompleted",
 		() => "",
 		() => 44,

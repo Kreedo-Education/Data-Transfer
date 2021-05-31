@@ -1,44 +1,52 @@
 var messageData;
+var isWeb = true;
 var levelDetails = {"currentLevel":{"level":0,"presentationCompleted":0},"level0":{"presentation":{"completed":0,"playCount":0,"completedCount":0,"timeSpent":0}},"level1":{"presentation":{"completed":0,"playCount":0,"completedCount":0,"timeSpent":0},"completed":0,"playCount":0,"completedCount":0,"timeSpent":0,"correctAttempts":0,"incorrectAttempts":0},"level2":{"presentation":{"completed":0,"playCount":0,"completedCount":0,"timeSpent":0},"completed":0,"playCount":0,"completedCount":0,"timeSpent":0,"correctAttempts":0,"incorrectAttempts":0},"level3":{"presentation":{"completed":0,"playCount":0,"completedCount":0,"timeSpent":0},"completed":0,"playCount":0,"completedCount":0,"timeSpent":0,"correctAttempts":0,"incorrectAttempts":0},"level4":{"presentation":{"completed":0,"playCount":0,"completedCount":0,"timeSpent":0},"completed":0,"playCount":0,"completedCount":0,"timeSpent":0,"correctAttempts":0,"incorrectAttempts":0}}
 
-localStorage.clear(); // uncomment if with app else comment
+// localStorage.clear(); //uncomment if want to clear cached progress in web
 
 // comment below 3 line if with app else uncomment
-// var message = {"data":{}};
-// message.data = {"learningTrackid":1,"gameId":1,"gameVersion":"string","predGameId":0,"gamePath":"https://kreedo-game-upload-poc.s3.us-east-2.amazonaws.com/701_LearningTeens.zip","isActive":true,"isblocked":false,"isGameDownloadComplete":true,"gameName":"Place Value Quantities","attemptId":0,"totalRewards":0,"completedCount":0,"startDateTime":"","endDateTime":"","completed":false,"isMusic":true,"levelDetails":{"currentLevel":{"level":0,"presentationCompleted":0},"level0":{"presentation":{"completed":0,"playCount":0,"completedCount":0,"timeSpent":0}},"level1":{"presentation":{"completed":0,"playCount":0,"completedCount":0,"timeSpent":0},"completed":0,"playCount":0,"completedCount":0,"timeSpent":0,"correctAttempts":0,"incorrectAttempts":0},"level2":{"presentation":{"completed":0,"playCount":0,"completedCount":0,"timeSpent":0},"completed":0,"playCount":0,"completedCount":0,"timeSpent":0,"correctAttempts":0,"incorrectAttempts":0},"level3":{"presentation":{"completed":0,"playCount":0,"completedCount":0,"timeSpent":0},"completed":0,"playCount":0,"completedCount":0,"timeSpent":0,"correctAttempts":0,"incorrectAttempts":0},"level4":{"presentation":{"completed":0,"playCount":0,"completedCount":0,"timeSpent":0},"completed":0,"playCount":0,"completedCount":0,"timeSpent":0,"correctAttempts":0,"incorrectAttempts":0}}};
-// handleEvent(message);
+var message = {"data":{}};
+message.data = {"learningTrackid":1,"gameId":1,"gameVersion":"string","predGameId":0,"gamePath":"https://kreedo-game-upload-poc.s3.us-east-2.amazonaws.com/701_LearningTeens.zip","isActive":true,"isblocked":false,"isGameDownloadComplete":true,"gameName":"Place Value Quantities","attemptId":0,"totalRewards":0,"completedCount":0,"startDateTime":"","endDateTime":"","completed":false,"isMusic":true,"levelDetails":{"currentLevel":{"level":0,"presentationCompleted":0},"level0":{"presentation":{"completed":0,"playCount":0,"completedCount":0,"timeSpent":0}},"level1":{"presentation":{"completed":0,"playCount":0,"completedCount":0,"timeSpent":0},"completed":0,"playCount":0,"completedCount":0,"timeSpent":0,"correctAttempts":0,"incorrectAttempts":0},"level2":{"presentation":{"completed":0,"playCount":0,"completedCount":0,"timeSpent":0},"completed":0,"playCount":0,"completedCount":0,"timeSpent":0,"correctAttempts":0,"incorrectAttempts":0},"level3":{"presentation":{"completed":0,"playCount":0,"completedCount":0,"timeSpent":0},"completed":0,"playCount":0,"completedCount":0,"timeSpent":0,"correctAttempts":0,"incorrectAttempts":0},"level4":{"presentation":{"completed":0,"playCount":0,"completedCount":0,"timeSpent":0},"completed":0,"playCount":0,"completedCount":0,"timeSpent":0,"correctAttempts":0,"incorrectAttempts":0}}};
+
 
 //app will trigger this event on load finish.
 // uncomment this listener if with app else comment
 document.addEventListener("message", handleEvent);
 
-function handleEvent(message) {	
-	messageData =  message.data;	
-
-	
+function handleEvent(messageTemp) {	
+	isWeb = false;
+	messageData =  messageTemp.data;	
 }
 
 runOnStartup(async runtime =>
 {
-	if(localStorage.getItem("pvq-data")!=null){
 	
-	var jsonTxt = localStorage.getItem("pvq-data");
-		let data = JSON.parse(localStorage.getItem("pvq-data"))	
-		messageData=data;
-		console.log("Loaded from LocalStorage", data);
+	if(isWeb){
+		if(localStorage.getItem("pvq-data")!=null){
+			var jsonTxt = localStorage.getItem("pvq-data");
+			let data = JSON.parse(localStorage.getItem("pvq-data"))	
+			messageData=data;
+			console.log("Web - LocalStorage", data);
+		}
+		else{
+			messageData = message.data;
+			console.log("Web - Default Data: ", JSON.stringify(messageData));
+		}
 	}
 	else{
-	console.log("loaded from app ", messageData);
+		console.log("loaded from app ", messageData);
 	}
+
+
+	
 	if(messageData){
-		console.log("loaded data: ", JSON.stringify(messageData));
+		
 		messageData.completedCount = 0;
 		messageData.levelDetails.level0 = levelDetails.level0;
 		messageData.levelDetails.level1 = levelDetails.level1;
 		messageData.levelDetails.level2 = levelDetails.level2;
 		messageData.levelDetails.level3 = levelDetails.level3;
 		messageData.levelDetails.level4 = levelDetails.level4;
-		console.log("Default data: ", JSON.stringify(messageData));
 		runtime.globalVars.GameID = messageData.gameId;
 // 		runtime.globalVars.ChildID = messageData.childId;
 		runtime.globalVars.GameName = messageData.gameName;		
@@ -120,7 +128,7 @@ async function OnBeforeProjectStart(runtime)
 	// instances are created and available to use here.
 // 	console.log("OnBeforeProjectStart", window.location);
 	runtime.getInstanceByUid(486).setJsonDataCopy(messageData);
-	console.log("JSON_DATA", runtime.getInstanceByUid(486).getJsonDataCopy())
+	console.log("CONSTRUCT_JSON_DATA_SET", runtime.getInstanceByUid(486).getJsonDataCopy())
 	runtime.addEventListener("tick", () => Tick(runtime));
 }
 
