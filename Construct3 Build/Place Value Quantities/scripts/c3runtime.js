@@ -3369,13 +3369,6 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 		C3.Plugins.Json.Acts.SetValue,
 		C3.Plugins.System.Cnds.CompareVar,
 		C3.ScriptsInEvents.Egame_Event11_Act1,
-		C3.Plugins.Browser.Exps.ExecJS,
-		C3.Plugins.Json.Acts.SetJSON,
-		C3.Plugins.Json.Exps.GetAsCompactString,
-		C3.Plugins.Browser.Acts.ConsoleLog,
-		C3.Plugins.Json.Exps.GetAsBeautifiedString,
-		C3.ScriptsInEvents.Egame_Event12_Act5,
-		C3.Plugins.Browser.Acts.Close,
 		C3.Plugins.System.Cnds.For,
 		C3.Plugins.Audio.Acts.Stop,
 		C3.Plugins.System.Exps.loopindex,
@@ -3388,7 +3381,7 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 		C3.Plugins.System.Exps.random,
 		C3.Plugins.Arr.Exps.At,
 		C3.Plugins.Arr.Acts.SetX,
-		C3.ScriptsInEvents.Egame_Event34_Act1,
+		C3.ScriptsInEvents.Egame_Event33_Act1,
 		C3.Plugins.System.Cnds.While,
 		C3.Plugins.System.Acts.AddVar,
 		C3.Plugins.System.Acts.SetFunctionReturnValue,
@@ -3411,8 +3404,8 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 		C3.Plugins.Sprite.Acts.MoveToTop,
 		C3.Plugins.System.Cnds.ForEach,
 		C3.Plugins.Sprite.Cnds.IsBoolInstanceVarSet,
-		C3.Plugins.Touch.Cnds.OnTapGestureObject,
 		C3.Plugins.System.Cnds.IsGroupActive,
+		C3.Plugins.Touch.Cnds.OnTapGestureObject,
 		C3.Plugins.System.Acts.SetBoolVar,
 		C3.Plugins.System.Acts.SaveState,
 		C3.Plugins.Sprite.Acts.SetOpacity,
@@ -3431,12 +3424,18 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 		C3.Plugins.Browser.Acts.RequestFullScreen,
 		C3.Behaviors.Anchor.Acts.SetEnabled,
 		C3.Plugins.Text.Acts.SetText,
+		C3.Plugins.Browser.Exps.ExecJS,
 		C3.Plugins.Audio.Cnds.OnEnded,
 		C3.Plugins.System.Exps.max,
 		C3.ScriptsInEvents.Etutorial_Event4_Act4,
 		C3.ScriptsInEvents.Etutorial_Event5_Act1,
 		C3.Plugins.System.Acts.RestartLayout,
 		C3.Plugins.Sprite.Acts.Destroy,
+		C3.Plugins.Json.Acts.SetJSON,
+		C3.Plugins.Json.Exps.GetAsCompactString,
+		C3.Plugins.Browser.Acts.ConsoleLog,
+		C3.Plugins.Json.Exps.GetAsBeautifiedString,
+		C3.ScriptsInEvents.Etutorial_Event22_Act4,
 		C3.Behaviors.DragnDrop.Cnds.IsDragging,
 		C3.Plugins.Sprite.Cnds.IsOnScreen,
 		C3.Behaviors.DragnDrop.Acts.Drop,
@@ -3765,7 +3764,6 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 		{tutorial_time_spent_key: 0},
 		{tutorial_count_key: 0},
 		{tutorial_comleted_count_key: 0},
-		{SaveAndExit: 0},
 		{pause: 0},
 		{tempItem: 0},
 		{rand_index: 0},
@@ -3970,21 +3968,6 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 		() => 2,
 		() => 3,
 		() => 4,
-		() => "endDateTime",
-		p => {
-			const f0 = p._GetNode(0).GetBoundMethod();
-			return () => f0("Date()");
-		},
-		() => "home",
-		() => "gameData",
-		p => {
-			const n0 = p._GetNode(0);
-			return () => n0.ExpObject(".");
-		},
-		p => {
-			const n0 = p._GetNode(0);
-			return () => ("Home Clicked: " + n0.ExpObject("."));
-		},
 		() => "levelDetails.currentLevel.presentationCompleted",
 		() => "",
 		() => 44,
@@ -4140,6 +4123,10 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 			return () => (v0.GetValue() - 114);
 		},
 		() => 0.5,
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			return () => f0("Date()");
+		},
 		() => 0.8,
 		p => {
 			const v0 = p._GetNode(0).GetVar();
@@ -4159,6 +4146,16 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 			return () => f0(v1.GetValue(), (v2.GetValue() + 1));
 		},
 		() => "L0TutorialPlay",
+		() => "home",
+		() => "gameData",
+		p => {
+			const n0 = p._GetNode(0);
+			return () => n0.ExpObject(".");
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			return () => ("Home Clicked: " + n0.ExpObject("."));
+		},
 		() => "Default",
 		p => {
 			const n0 = p._GetNode(0);

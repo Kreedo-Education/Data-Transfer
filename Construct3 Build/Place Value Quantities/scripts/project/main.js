@@ -40,10 +40,8 @@ runOnStartup(async runtime =>
 
 	
 	if(messageData){
-		messageData.startDateTime = Date();
-		messageData.endDateTime = "";
-		messageData.completedCount = 0;
 		
+		messageData.completedCount = 0;
 		messageData.levelDetails.level0 = levelDetails.level0;
 		messageData.levelDetails.level1 = levelDetails.level1;
 		messageData.levelDetails.level2 = levelDetails.level2;
