@@ -3405,11 +3405,11 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 		C3.Plugins.System.Cnds.ForEach,
 		C3.Plugins.Sprite.Cnds.IsBoolInstanceVarSet,
 		C3.Plugins.System.Cnds.IsGroupActive,
-		C3.Plugins.Touch.Cnds.OnTapGestureObject,
 		C3.Plugins.System.Acts.SetBoolVar,
-		C3.Plugins.System.Acts.SaveState,
+		C3.Plugins.Touch.Cnds.OnTapGestureObject,
 		C3.Plugins.Sprite.Acts.SetOpacity,
 		C3.Plugins.Sprite.Acts.SetAnim,
+		C3.Plugins.System.Acts.SaveState,
 		C3.Plugins.System.Acts.GoToLayoutByName,
 		C3.Plugins.System.Cnds.Compare,
 		C3.Plugins.System.Exps.find,
@@ -3423,6 +3423,11 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 		C3.Plugins.Browser.Cnds.IsFullscreen,
 		C3.Plugins.Browser.Acts.RequestFullScreen,
 		C3.Behaviors.Anchor.Acts.SetEnabled,
+		C3.Plugins.Json.Acts.SetJSON,
+		C3.Plugins.Json.Exps.GetAsCompactString,
+		C3.ScriptsInEvents.Ehud_Event79_Act4,
+		C3.ScriptsInEvents.Ehud_Event80_Act2,
+		C3.Plugins.Browser.Acts.Close,
 		C3.Plugins.Text.Acts.SetText,
 		C3.Plugins.Browser.Exps.ExecJS,
 		C3.Plugins.Audio.Cnds.OnEnded,
@@ -3431,11 +3436,6 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 		C3.ScriptsInEvents.Etutorial_Event5_Act1,
 		C3.Plugins.System.Acts.RestartLayout,
 		C3.Plugins.Sprite.Acts.Destroy,
-		C3.Plugins.Json.Acts.SetJSON,
-		C3.Plugins.Json.Exps.GetAsCompactString,
-		C3.Plugins.Browser.Acts.ConsoleLog,
-		C3.Plugins.Json.Exps.GetAsBeautifiedString,
-		C3.ScriptsInEvents.Etutorial_Event22_Act4,
 		C3.Behaviors.DragnDrop.Cnds.IsDragging,
 		C3.Plugins.Sprite.Cnds.IsOnScreen,
 		C3.Behaviors.DragnDrop.Acts.Drop,
@@ -3496,7 +3496,6 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 		C3.Plugins.Arr.Acts.Push,
 		C3.Plugins.Arr.Acts.Sort,
 		C3.Plugins.Sprite.Acts.SubInstanceVar,
-		C3.ScriptsInEvents.Elevel3_Event98_Act4,
 		C3.Plugins.Timeline.Acts.PlayTimeline
 		];
 	};
@@ -3755,6 +3754,9 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 		{activeCounter: 0},
 		{GameCompletedCounter: 0},
 		{isGamePresentatinCompleted: 0},
+		{NormalBgMusicVol: 0},
+		{LowBgMusicVol: 0},
+		{IsWeb: 0},
 		{jsonData: 0},
 		{incorrect_key: 0},
 		{correct_key: 0},
@@ -3913,7 +3915,6 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 			const v0 = p._GetNode(0).GetVar();
 			return () => v0.GetValue();
 		},
-		() => 20,
 		() => 0,
 		() => 1,
 		p => {
@@ -4045,7 +4046,11 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 			const v2 = p._GetNode(2).GetVar();
 			return () => ((v0.GetValue() + (10 * v1.GetValue())) + (100 * v2.GetValue()));
 		},
-		() => "music",
+		p => {
+			const v0 = p._GetNode(0).GetVar();
+			const v1 = p._GetNode(1).GetVar();
+			return () => (v0.GetValue() + v1.GetValue());
+		},
 		() => 50,
 		() => "GlobalButtons",
 		p => {
@@ -4062,11 +4067,6 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 			return () => ("GL_A_1" + v0.GetValue());
 		},
 		() => "GL_A_1",
-		p => {
-			const v0 = p._GetNode(0).GetVar();
-			const v1 = p._GetNode(1).GetVar();
-			return () => (v0.GetValue() + v1.GetValue());
-		},
 		() => "L1HintSave",
 		p => {
 			const v0 = p._GetNode(0).GetVar();
@@ -4101,7 +4101,6 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 			return () => ((44 * 0.33) * v0.GetValue());
 		},
 		() => 19,
-		() => -5,
 		() => 15,
 		() => 120,
 		() => "levelDetails.level0.presentation.timeSpent",
@@ -4112,6 +4111,12 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 		() => "levelDetails.level3.timeSpent",
 		() => "levelDetails.level3.presentation.timeSpent",
 		() => "levelDetails.level4.timeSpent",
+		() => "home",
+		() => "gameData",
+		p => {
+			const n0 = p._GetNode(0);
+			return () => n0.ExpObject(".");
+		},
 		() => "L1TutorialPlay",
 		p => {
 			const v0 = p._GetNode(0).GetVar();
@@ -4146,16 +4151,6 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 			return () => f0(v1.GetValue(), (v2.GetValue() + 1));
 		},
 		() => "L0TutorialPlay",
-		() => "home",
-		() => "gameData",
-		p => {
-			const n0 = p._GetNode(0);
-			return () => n0.ExpObject(".");
-		},
-		p => {
-			const n0 = p._GetNode(0);
-			return () => ("Home Clicked: " + n0.ExpObject("."));
-		},
 		() => "Default",
 		p => {
 			const n0 = p._GetNode(0);
@@ -4285,6 +4280,7 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 			return () => ("PVQ_A_L0_16" + v0.GetValue());
 		},
 		() => "PVQ_A_L0_16",
+		() => 20,
 		p => {
 			const v0 = p._GetNode(0).GetVar();
 			return () => ("PVQ_A_L0_17" + v0.GetValue());
@@ -4345,6 +4341,14 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 		() => "L1Buttons",
 		() => "L1GamePlay",
 		() => "L1Functions",
+		p => {
+			const n0 = p._GetNode(0);
+			return () => (n0.ExpObject() + 52);
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			return () => (n0.ExpObject() - 5);
+		},
 		() => 6,
 		p => {
 			const v0 = p._GetNode(0).GetVar();
@@ -4732,6 +4736,8 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 		() => 201,
 		() => "L3TutorialButtons",
 		() => "L3TutorialFunctions",
+		() => 822,
+		() => 111,
 		() => 1.3,
 		p => {
 			const v0 = p._GetNode(0).GetVar();
@@ -4788,6 +4794,8 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 		() => 764,
 		() => "PVQ_A_L4_30",
 		() => "L4TutorialFunctions",
+		() => 770,
+		() => 116,
 		() => "Close",
 		() => 193,
 		p => {
