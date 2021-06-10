@@ -9,14 +9,14 @@ There are two types of game's builds available for now: -
  
 ## Initial Set-Up for each build
   ### For Unity ###
-  [Zip Link](https://kreedo-education.github.io/Data-Transfer/Unity%20Build/demo.zip)
+   #### [Zip Link](https://kreedo-education.github.io/Data-Transfer/Unity%20Build/demo.zip)
    These are some steps that need to be followed for initial setup for Unity build
    1. Generate the WebGL build.
    2. Open index.html in any text editor.
 
   ### For Construct3 ###
-   [Play Game](https://kreedo-education.github.io/Data-Transfer/Construct3%20Build/Place%20Value%20Quantities/)
-  [Zip link](https://kreedo-education.github.io/Data-Transfer/Construct3%20Build/place_value_quantities.zip)
+   #### [Play Game](https://kreedo-education.github.io/Data-Transfer/Construct3%20Build/Place%20Value%20Quantities/)
+   #### [Zip link](https://kreedo-education.github.io/Data-Transfer/Construct3%20Build/place_value_quantities.zip)
    These are some steps that need to be followed for initial setup for Construct build
    1. Add two scripts called main.js and script.js [refer to screenshots to know how to add them].  These files can also be found in exported html5 build at scripts/project/main.js & scripts/project/scriptsInEvents.js
    2. Open main.js and script.js in construct editor
