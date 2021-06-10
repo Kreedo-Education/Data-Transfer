@@ -54,9 +54,10 @@ export class AppInterface  {
 			AppInterface.sendToApp(runtime.getInstanceByUid(488).getJsonDataCopy());
 		},
 
-		async Ehud_Event80_Act2(runtime, localVars)
+		async Ehud_Event80_Act3(runtime, localVars)
 		{
 			localStorage.setItem("pvq-data", JSON.stringify(runtime.getInstanceByUid(486).getJsonDataCopy()));
+			console.log(runtime.getInstanceByUid(486).getJsonDataCopy())
 		},
 
 		async Etutorial_Event4_Act4(runtime, localVars)

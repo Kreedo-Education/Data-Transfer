@@ -1,5 +1,14 @@
 var messageData;
 var isWeb = true;
+function setWeb(){
+	if (confirm("Playing in browser?")) {
+	  isWeb = true;
+	} else {
+		messageData = message.data;
+	  isWeb = false
+	}
+}
+
 var levelDetails = {"currentLevel":{"level":0,"presentationCompleted":0},"level0":{"presentation":{"completed":0,"playCount":0,"completedCount":0,"timeSpent":0}},"level1":{"presentation":{"completed":0,"playCount":0,"completedCount":0,"timeSpent":0},"completed":0,"playCount":0,"completedCount":0,"timeSpent":0,"correctAttempts":0,"incorrectAttempts":0},"level2":{"presentation":{"completed":0,"playCount":0,"completedCount":0,"timeSpent":0},"completed":0,"playCount":0,"completedCount":0,"timeSpent":0,"correctAttempts":0,"incorrectAttempts":0},"level3":{"presentation":{"completed":0,"playCount":0,"completedCount":0,"timeSpent":0},"completed":0,"playCount":0,"completedCount":0,"timeSpent":0,"correctAttempts":0,"incorrectAttempts":0},"level4":{"presentation":{"completed":0,"playCount":0,"completedCount":0,"timeSpent":0},"completed":0,"playCount":0,"completedCount":0,"timeSpent":0,"correctAttempts":0,"incorrectAttempts":0}}
 
 // localStorage.clear(); //uncomment if want to clear cached progress in web
@@ -20,8 +29,10 @@ function handleEvent(messageTemp) {
 
 runOnStartup(async runtime =>
 {
+	if(isWeb) setWeb();
 	
 	if(isWeb){
+	
 		if(localStorage.getItem("pvq-data")!=null){
 			var jsonTxt = localStorage.getItem("pvq-data");
 			let data = JSON.parse(localStorage.getItem("pvq-data"))	
