@@ -3754,6 +3754,9 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 		{L3_TutorialCount: 0},
 		{L3_Tutorial_Completed_Count: 0},
 		{L3_Tutorial_TimeSpent: 0},
+		{L3_1s_Count: 0},
+		{L3_10s_Count: 0},
+		{L3_100s_Count: 0},
 		{L2_trial: 0},
 		{L2_TotalTrial: 0},
 		{L2_Completed: 0},
@@ -3768,6 +3771,9 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 		{L2_Tutorial_TimeSpent: 0},
 		{L2_TutorialCount: 0},
 		{L2_Tutorial_Completed_Count: 0},
+		{L2_1s_Count: 0},
+		{L2_10s_Count: 0},
+		{L2_100s_Count: 0},
 		{L4_trial: 0},
 		{L4_TotalTrial: 0},
 		{L4_Completed: 0},
@@ -3783,6 +3789,9 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 		{L4_Tutorial_Completed_Count: 0},
 		{L4_TutorialCount: 0},
 		{L4_Tutorial_TimeSpent: 0},
+		{L4_1s_Count: 0},
+		{L4_10s_Count: 0},
+		{L4_100s_Count: 0},
 		{GameName: 0},
 		{GameID: 0},
 		{ChildID: 0},
@@ -4664,6 +4673,29 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 			return () => ("PVQ_A_L2_38" + v0.GetValue());
 		},
 		() => "PVQ_A_L2_38",
+		p => {
+			const v0 = p._GetNode(0).GetVar();
+			const v1 = p._GetNode(1).GetVar();
+			return () => (and("PVQ_A_L2_3", (4 + v0.GetValue())) + v1.GetValue());
+		},
+		p => {
+			const v0 = p._GetNode(0).GetVar();
+			return () => and("PVQ_A_L2_3", (3 + v0.GetValue()));
+		},
+		p => {
+			const v0 = p._GetNode(0).GetVar();
+			const v1 = p._GetNode(1).GetVar();
+			return () => (and("PVQ_A_L2_4", (3 + v0.GetValue())) + v1.GetValue());
+		},
+		p => {
+			const v0 = p._GetNode(0).GetVar();
+			const v1 = p._GetNode(1).GetVar();
+			return () => (and("PVQ_A_L2_5", (2 + v0.GetValue())) + v1.GetValue());
+		},
+		p => {
+			const v0 = p._GetNode(0).GetVar();
+			return () => and("PVQ_A_L2_5", (2 + v0.GetValue()));
+		},
 		() => "1s",
 		p => {
 			const n0 = p._GetNode(0);
@@ -4673,7 +4705,7 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 			const n0 = p._GetNode(0);
 			return () => (n0.ExpObject() - 4);
 		},
-		() => 1.8,
+		() => 1.7,
 		() => "out",
 		p => {
 			const v0 = p._GetNode(0).GetVar();
@@ -4692,6 +4724,7 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 		},
 		() => "PVQ_A_L2_55",
 		() => "100s",
+		() => 1.8,
 		() => "levelDetails.level2.presentation.completed",
 		() => "out1",
 		() => "L2TutorialMusicPlayBack",
@@ -4828,7 +4861,16 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 		},
 		() => 87,
 		() => 430,
+		p => {
+			const v0 = p._GetNode(0).GetVar();
+			return () => and("PVQ_A_L2_3", (4 + v0.GetValue()));
+		},
+		() => 2.2,
 		() => 1.3,
+		p => {
+			const v0 = p._GetNode(0).GetVar();
+			return () => and("PVQ_A_L2_4", (3 + v0.GetValue()));
+		},
 		p => {
 			const v0 = p._GetNode(0).GetVar();
 			return () => ("PVQ_A_L3_32" + v0.GetValue());
@@ -4865,7 +4907,7 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 		() => 0.6,
 		p => {
 			const v0 = p._GetNode(0).GetVar();
-			return () => ("PVQ_A_L4_1" + v0.GetValue());
+			return () => ("PVQ_A_L4_1_Stereo" + v0.GetValue());
 		},
 		() => "PVQ_A_L4_1",
 		() => "L4TutorialMusicPlayBack",
@@ -4904,13 +4946,13 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 		() => "L4TutotrialButtons",
 		() => "L4GamePlay",
 		() => "L4TutorialSave",
-		() => "levelDetails.level4.completed",
 		() => "L4",
+		() => "levelDetails.level4.completed",
 		() => "L4Functions",
 		() => 770,
-		() => 930,
-		() => 764,
 		() => 483,
+		() => 764,
+		() => 930,
 		() => 841,
 		() => 346,
 		() => "PVQ_A_L4_42",
