@@ -30,11 +30,12 @@ document.addEventListener("message", handleEvent);
 function handleEvent(messageTemp) {	
 	isWeb = false;
 	messageData =  messageTemp.data;	
+	alert("Data from webview", messageData);
 }
 
 runOnStartup(async runtime =>
 {
-// 	if(isWeb) setWeb();
+ 	if(isWeb) setWeb();
 	
 	if(isWeb){
 	
