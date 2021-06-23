@@ -3712,9 +3712,12 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 		{PlatformInfo: 0},
 		{"1s_Mask": 0},
 		{"1s_Outline_Mask": 0},
+		{"10s_Mask": 0},
+		{"10s_Outline_Mask": 0},
+		{"10s2": 0},
 		{Buttons: 0},
 		{DragDrop: 0},
-		{qunatities: 0},
+		{quantities: 0},
 		{quantities_outlined: 0},
 		{QantityBoundaries: 0},
 		{Flash: 0},
@@ -4268,6 +4271,8 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 			return () => (and("", n0.ExpInstVar_Family()) + "s");
 		},
 		() => "Tutorial",
+		() => 130,
+		() => 24,
 		() => "DragDropAnim",
 		p => {
 			const v0 = p._GetNode(0).GetVar();
@@ -4320,7 +4325,6 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 			return () => ("VB_A_L0_4" + v0.GetValue());
 		},
 		() => "VB_A_L0_4",
-		() => "Confetti",
 		() => 316,
 		() => 520,
 		() => "levelDetails.level0.presentation.completed",
@@ -4350,6 +4354,7 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 		() => 736,
 		() => 786,
 		() => 116,
+		() => 122,
 		() => 0.45,
 		p => {
 			const v0 = p._GetNode(0).GetVar();
@@ -4435,8 +4440,8 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 		() => "L1Buttons",
 		() => "L1GamePlay",
 		() => "L1Functions",
-		() => 821,
-		() => 95,
+		() => 823,
+		() => 422,
 		() => 6,
 		p => {
 			const v0 = p._GetNode(0).GetVar();
@@ -4514,6 +4519,7 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 			return () => and(n0.ExpInstVar_Family(), "sBoundary");
 		},
 		() => 0.0001,
+		() => 16,
 		() => "CorrectSound",
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
@@ -4545,6 +4551,7 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 		},
 		() => "GL_A_4",
 		() => "levelDetails.level1.completed",
+		() => "Confetti",
 		p => {
 			const v0 = p._GetNode(0).GetVar();
 			return () => (v0.GetValue() + 130);
@@ -4557,6 +4564,10 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 		p => {
 			const n0 = p._GetNode(0);
 			return () => Math.round(n0.ExpBehavior("RewardPoints"));
+		},
+		p => {
+			const v0 = p._GetNode(0).GetVar();
+			return () => (v0.GetValue() - 180);
 		},
 		p => {
 			const v0 = p._GetNode(0).GetVar();
@@ -4592,13 +4603,14 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 		p => {
 			const v0 = p._GetNode(0).GetVar();
 			const v1 = p._GetNode(1).GetVar();
-			return () => ((v0.GetValue() - 250) + (v1.GetValue() * 230));
+			return () => ((v0.GetValue() - 260) + (v1.GetValue() * 230));
 		},
 		p => {
 			const v0 = p._GetNode(0).GetVar();
 			const v1 = p._GetNode(1).GetVar();
 			return () => ((v0.GetValue() + 110) + (v1.GetValue() * 60));
 		},
+		() => 0.75,
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			return () => (f0() % 3);
@@ -4642,6 +4654,8 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 		},
 		() => 89,
 		() => 92,
+		() => 821,
+		() => 95,
 		() => "SoftLight",
 		p => {
 			const v0 = p._GetNode(0).GetVar();
@@ -4759,6 +4773,14 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 			const n0 = p._GetNode(0);
 			return () => (n0.ExpObject() * 0.4);
 		},
+		p => {
+			const n0 = p._GetNode(0);
+			return () => (n0.ExpObject() * 0.9);
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			return () => (n0.ExpObject() * 0.7);
+		},
 		() => "Up",
 		p => {
 			const n0 = p._GetNode(0);
@@ -4875,11 +4897,11 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 			const v0 = p._GetNode(0).GetVar();
 			return () => ("PVQ_A_L3_32" + v0.GetValue());
 		},
-		() => "PVQ_A_L3_37",
-		() => 306,
+		() => "PVQ_A_L3_41",
+		() => 610,
 		p => {
 			const v0 = p._GetNode(0).GetVar();
-			return () => ("PVQ_A_L3_37" + v0.GetValue());
+			return () => ("PVQ_A_L3_41" + v0.GetValue());
 		},
 		() => "levelDetails.level3.presentation.completed",
 		() => "PVQ_A_L3_58",
@@ -4891,23 +4913,31 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 		() => "L3Functions",
 		() => 94,
 		() => 830,
-		() => 610,
 		() => 720,
 		() => 408,
+		() => 306,
 		() => "PVQ_A_L3_35",
 		() => "PVQ_A_L3_43",
 		() => "PVQ_A_L3_31",
-		() => "PVQ_A_L3_41",
 		() => "PVQ_A_L3_51",
 		() => "PVQ_A_L3_42",
 		() => "PVQ_A_L3_39",
+		() => "PVQ_A_L3_37",
+		p => {
+			const n0 = p._GetNode(0);
+			return () => (n0.ExpObject() * 0.8);
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			return () => (n0.ExpObject() * 0.6);
+		},
 		() => "L3Buttons",
 		() => "L3Tweens",
 		() => "L3GamePlayMusicPlayBack",
 		() => 0.6,
 		p => {
 			const v0 = p._GetNode(0).GetVar();
-			return () => ("PVQ_A_L4_1_Stereo" + v0.GetValue());
+			return () => ("PVQ_A_L4_1" + v0.GetValue());
 		},
 		() => "PVQ_A_L4_1",
 		() => "L4TutorialMusicPlayBack",
