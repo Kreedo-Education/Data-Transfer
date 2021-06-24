@@ -3490,15 +3490,16 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 		C3.Plugins.System.Cnds.TriggerOnce,
 		C3.Plugins.Touch.Cnds.OnTouchStart,
 		C3.Plugins.Touch.Cnds.OnTouchEnd,
+		C3.Plugins.PlatformInfo.Cnds.IsOnMobile,
 		C3.Plugins.Browser.Cnds.IsFullscreen,
 		C3.Plugins.Browser.Acts.RequestFullScreen,
 		C3.Behaviors.Anchor.Acts.SetEnabled,
 		C3.Plugins.Json.Acts.SetJSON,
 		C3.Plugins.Json.Exps.GetAsCompactString,
 		C3.ScriptsInEvents.Ehud_Event79_Act4,
+		C3.Plugins.Browser.Acts.Close,
 		C3.Plugins.Browser.Acts.CancelFullScreen,
 		C3.ScriptsInEvents.Ehud_Event80_Act3,
-		C3.Plugins.Browser.Acts.Close,
 		C3.Plugins.Text.Acts.SetText,
 		C3.Plugins.Browser.Exps.ExecJS,
 		C3.Plugins.Audio.Cnds.OnEnded,
@@ -3554,6 +3555,7 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 		C3.Behaviors.Tween.Cnds.IsPlaying,
 		C3.Behaviors.Tween.Exps.Value,
 		C3.Plugins.System.Cnds.OnLoadComplete,
+		C3.ScriptsInEvents.Elevel1_Event70_Act4,
 		C3.Plugins.System.Exps.choose,
 		C3.Plugins.System.Acts.SubVar,
 		C3.Plugins.System.Cnds.PickRandom,
@@ -3570,8 +3572,11 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 		C3.Plugins.Sprite.Cnds.CompareY,
 		C3.Plugins.Arr.Acts.Push,
 		C3.Plugins.Arr.Acts.Sort,
+		C3.ScriptsInEvents.Elevel2_Event112_Act4,
 		C3.Plugins.Sprite.Acts.SubInstanceVar,
-		C3.Plugins.Timeline.Acts.PlayTimeline
+		C3.ScriptsInEvents.Elevel3_Event104_Act4,
+		C3.Plugins.Timeline.Acts.PlayTimeline,
+		C3.ScriptsInEvents.Elevel4_Event89_Act4
 		];
 	};
 	self.C3_JsPropNameTable = [

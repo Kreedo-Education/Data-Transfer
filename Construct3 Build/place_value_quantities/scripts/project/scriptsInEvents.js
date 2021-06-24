@@ -40,7 +40,7 @@ export class AppInterface  {
 
 		async Egame_Event11_Act1(runtime, localVars)
 		{
-			if(runtime.globalVars.IsWeb)
+			// if(runtime.globalVars.IsWeb)
 			localStorage.setItem("pvq-data", JSON.stringify(runtime.getInstanceByUid(486).getJsonDataCopy()));
 			AppInterface.sendToApp(runtime.getInstanceByUid(486).getJsonDataCopy());
 		},
@@ -80,6 +80,42 @@ export class AppInterface  {
 			else{
 			runtime.goToLayout("Level"+runtime.globalVars.GameLevel+"_Tutorial");
 			}
+			
+		},
+
+		async Elevel1_Event70_Act4(runtime, localVars)
+		{
+			let data = JSON.parse(localStorage.getItem("pvq-data"));
+			runtime.globalVars.RewardPoints = data.totalRewards;
+			runtime.getInstanceByUid(486).setJsonDataCopy(data);
+			
+			
+		},
+
+		async Elevel2_Event112_Act4(runtime, localVars)
+		{
+			let data = JSON.parse(localStorage.getItem("pvq-data"));
+			runtime.globalVars.RewardPoints = data.totalRewards;
+			runtime.getInstanceByUid(486).setJsonDataCopy(data);
+			
+			
+		},
+
+		async Elevel3_Event104_Act4(runtime, localVars)
+		{
+			let data = JSON.parse(localStorage.getItem("pvq-data"));
+			runtime.globalVars.RewardPoints = data.totalRewards;
+			runtime.getInstanceByUid(486).setJsonDataCopy(data);
+			
+			
+		},
+
+		async Elevel4_Event89_Act4(runtime, localVars)
+		{
+			let data = JSON.parse(localStorage.getItem("pvq-data"));
+			runtime.globalVars.RewardPoints = data.totalRewards;
+			runtime.getInstanceByUid(486).setJsonDataCopy(data);
+			
 			
 		}
 
