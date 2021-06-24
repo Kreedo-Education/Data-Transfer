@@ -199,11 +199,15 @@ var messageData; // Global variable To store the data arived from app
 // call this function to unity
 function SendDataToUnity(data) {
 	// Don't change this line.
-	gameInstance.SendMessage("Canvas","DoSomething",data);
+	gameInstance.SendMessage("GetData","ReceiveData",data);
 }
+//GetData is a GameObject and ReceiveData is a method in that script.
+//data is nothing but the string data, which is being sent to Unity.
+
 ```
 
-=> Call this function once game finishes the loading.
+=> Call this function once game finishes the loading. 
+Unity 19 or older:-
 ```
 //If unity finished loading
 if (progress === 1 && !gameInstance.removeTimeout) 
@@ -217,8 +221,29 @@ if (progress === 1 && !gameInstance.removeTimeout)
 	}, 500);
 }
 ```
-Important:  gameInstance.SendMessage("Canvas","DoSomething",data);
-:- this line will take data to Unity and then Unity code i.e C# will catch this message and initialize all varibales accordingly.
+
+Unity 20 and above:-
+```
+   script.onload = () => {
+        createUnityInstance(canvas, config, (progress) => {
+          progressBarFull.style.width = 100 * progress + "%";
+        }).then((unityInstance) => {
+          //CDA: Assigning gameInstance variable
+          gameInstance = unityInstance;
+          //CDA: Calling the function to send data to Unity
+          SendDataToUnity(messageData);
+          loadingBar.style.display = "none";
+          fullscreenButton.onclick = () => {
+            unityInstance.SetFullscreen(1);
+          };
+        }).catch((message) => {
+          alert(message);
+        });
+      };
+```
+
+Important:  gameInstance.SendMessage("GetData","ReceiveData",data);
+:- this line will bring data to Unity and then Unity code i.e C# will catch this message and initialize all varibales accordingly.
 
 #### In Construct3 Build- ####
 Make these changes in main.js file:
@@ -281,8 +306,7 @@ runOnStartup(async runtime =>
 		runtime.globalVars.L4_trial = messageData.level4.currentPlay;
 		runtime.globalVars.L4_Completed = messageData.level4.completed;
 		runtime.globalVars.L4_correctAttempts = messageData.level4.correctAttempts;
-		runtime.globalVars.L4_IncorrectAttempts = messageData.level4.incorrectAttempts;
-		   
+		runtime.globalVars.L4_IncorrectAttempts = messageData.level4.incorrectAttempts;		   
 	}
   ```
  
@@ -290,10 +314,10 @@ runOnStartup(async runtime =>
 The game will have to send the data back to the app each time the game make any progress/update.
 
 #### In Unity Build ####
-Before we send the data to App we need bring the updated data from game to index.html then push the data to app.
-We can break this part in two parts as following:
-1. To bring data from Unity, we create a function getDataFromUnity(data)
-2. To push data to app we write these lines  in the same function. **window.ReactNativeWebView.postMessage(arg)**
+Before we send the data to App we need bring the updated data from game to index.html then send the data to app.
+We can break this in two parts as following:
+1. To bring data from Unity to javascript, we create a function getDataFromUnity(data)
+2. To send the data brought in javascript to app, we write these lines. **window.ReactNativeWebView.postMessage(arg)**
  Code - snippet
 ```
 // get data from unity Don't change name of it. 
@@ -306,6 +330,43 @@ function GetDataFromUnity( arg )
 //   alert( arg );
 }
 ```
+Note: All the js functions, that are being called in Unity C#, have to be defined in a plugin.
+"connect.jslib" is a plugin in which is added in the plugin folder of Unity project. The script need to import this plugin to use the function defined in the plugin.
+File:- connect.jslib
+code:-
+```
+mergeInto(LibraryManager.library, {
+
+// get data from unity Don't change name of it.
+GetDataFromUnity: function ( arg )
+{
+
+  if (window && window.ReactNativeWebView) {
+  window.ReactNativeWebView.postMessage(Pointer_stringify(arg)) // pushes the data to app
+  }
+   //alert( Pointer_stringify(arg) );
+  },
+
+});
+
+Calling the function:
+
+public class DataInput : MonoBehaviour
+{
+
+    [DllImport("__Internal")]
+    private static extern void GetDataFromUnity(string arg );
+    //this function send the data to app.
+    public void SendData(string str)
+    {
+        GetDataFromUnity(str);
+    }
+
+}
+
+```
+
+
 
 #### In Construct3 Build ####
 => Create and export a class AppInterface in script.js as following.
