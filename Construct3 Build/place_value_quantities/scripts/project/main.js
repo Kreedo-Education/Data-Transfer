@@ -34,7 +34,7 @@ function handleEvent(messageTemp) {
 
 runOnStartup(async runtime =>
 {
-// 	if(isWeb) setWeb();
+ 	if(isWeb) setWeb();
 	
 	if(isWeb){
 	
