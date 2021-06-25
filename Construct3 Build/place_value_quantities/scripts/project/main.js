@@ -30,7 +30,7 @@ document.addEventListener("message", handleEvent);
 function handleEvent(messageTemp) {	
 	isWeb = false;
 	messageData =  messageTemp.data;	
-	alert(JSON.stringify(messageData));
+	alert(JSON.stringify("Data from webview in game",messageData));
 }
 
 runOnStartup(async runtime =>
