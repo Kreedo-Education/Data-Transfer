@@ -50,12 +50,12 @@ export class AppInterface  {
 			
 		},
 
-		async Ehud_Event79_Act4(runtime, localVars)
+		async Ehud_Event84_Act4(runtime, localVars)
 		{
 			AppInterface.sendToApp(runtime.getInstanceByUid(488).getJsonDataCopy());
 		},
 
-		async Ehud_Event80_Act3(runtime, localVars)
+		async Ehud_Event85_Act2(runtime, localVars)
 		{
 			localStorage.setItem("pvq-data", JSON.stringify(runtime.getInstanceByUid(486).getJsonDataCopy()));
 			console.log(runtime.getInstanceByUid(486).getJsonDataCopy())
@@ -88,16 +88,16 @@ export class AppInterface  {
 			let data = JSON.parse(localStorage.getItem("pvq-data"));
 			runtime.globalVars.RewardPoints = data.totalRewards;
 			runtime.getInstanceByUid(486).setJsonDataCopy(data);
-			
+			runtime.globalVars.isMusic = data.isMusic
 			
 		},
 
-		async Elevel2_Event112_Act4(runtime, localVars)
+		async Elevel2_Event113_Act4(runtime, localVars)
 		{
 			let data = JSON.parse(localStorage.getItem("pvq-data"));
 			runtime.globalVars.RewardPoints = data.totalRewards;
 			runtime.getInstanceByUid(486).setJsonDataCopy(data);
-			
+			runtime.globalVars.isMusic = data.isMusic
 			
 		},
 
@@ -106,7 +106,7 @@ export class AppInterface  {
 			let data = JSON.parse(localStorage.getItem("pvq-data"));
 			runtime.globalVars.RewardPoints = data.totalRewards;
 			runtime.getInstanceByUid(486).setJsonDataCopy(data);
-			
+			runtime.globalVars.isMusic = data.isMusic
 			
 		},
 
@@ -115,7 +115,7 @@ export class AppInterface  {
 			let data = JSON.parse(localStorage.getItem("pvq-data"));
 			runtime.globalVars.RewardPoints = data.totalRewards;
 			runtime.getInstanceByUid(486).setJsonDataCopy(data);
-			
+			runtime.globalVars.isMusic = data.isMusic
 			
 		}
 
