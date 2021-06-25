@@ -132,6 +132,12 @@ We will be looking into all four tasks one by one.
     }
 }
 ```
+
+Data Format when exiting the game (Home -> Pick New Game Button Click) :-
+```
+{"home":1,"gameData":{"learningTrackid":1,"gameId":"1","gameVersion":"string","predGameId":0,"gamePath":"https://kreedo-game-upload-poc.s3.us-east-2.amazonaws.com/701_LearningTeens.zip","isActive":true,"isblocked":false,"isGameDownloadComplete":true,"gameName":"Place Value Quantities","attemptId":"0","totalRewards":0,"completedCount":0,"startDateTime":"","endDateTime":"","completed":0,"isMusic":1,"levelDetails":{"currentLevel":{"level":0,"presentationCompleted":0},"level0":{"presentation":{"completed":0,"playCount":1,"completedCount":0,"timeSpent":3}},"level1":{"presentation":{"completed":0,"playCount":0,"completedCount":0,"timeSpent":0},"completed":0,"playCount":0,"completedCount":0,"timeSpent":0,"correctAttempts":0,"incorrectAttempts":0},"level2":{"presentation":{"completed":0,"playCount":0,"completedCount":0,"timeSpent":0},"completed":0,"playCount":0,"completedCount":0,"timeSpent":0,"correctAttempts":0,"incorrectAttempts":0},"level3":{"presentation":{"completed":0,"playCount":0,"completedCount":0,"timeSpent":0},"completed":0,"playCount":0,"completedCount":0,"timeSpent":0,"correctAttempts":0,"incorrectAttempts":0},"level4":{"presentation":{"completed":0,"playCount":0,"completedCount":0,"timeSpent":0},"completed":0,"playCount":0,"completedCount":0,"timeSpent":0,"correctAttempts":0,"incorrectAttempts":0}}}}
+```
+
 ## Data Fields
 There are two types of data fields being captured here:
 #### 1. Global Data:- These are used to resume the game
@@ -241,6 +247,8 @@ Unity 20 and above:-
         });
       };
 ```
+n 
+
 
 Important:  gameInstance.SendMessage("GetData","ReceiveData",data);
 :- this line will bring data to Unity and then Unity code i.e C# will catch this message and initialize all varibales accordingly.
@@ -439,7 +447,7 @@ incorrectAttempts: runtime.globalVars.L4_IncorrectAttempts}
 
 }
 
-//localStorage.setItem("pvq-data", JSON.stringify(data));
+localStorage.setItem("pvq-data", JSON.stringify(data));
 AppInterface.sendToApp(data);  // implements the logic to push the data to app.
 
 ```
