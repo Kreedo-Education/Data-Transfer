@@ -29,7 +29,8 @@ document.addEventListener("message", handleEvent);
 
 function handleEvent(messageTemp) {	
 	isWeb = false;
-	messageData =  messageTemp.data;	
+	messageData =  messageTemp.data;
+	// alert("Data from webview: "+JSON.stringify(messageData)); 
 }
 
 runOnStartup(async runtime =>
