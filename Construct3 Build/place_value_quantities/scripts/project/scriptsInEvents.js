@@ -50,15 +50,15 @@ export class AppInterface  {
 			
 		},
 
-		async Ehud_Event84_Act4(runtime, localVars)
-		{
-			AppInterface.sendToApp(runtime.getInstanceByUid(488).getJsonDataCopy());
-		},
-
-		async Ehud_Event85_Act2(runtime, localVars)
+		async Egame_Event44_Act2(runtime, localVars)
 		{
 			localStorage.setItem("pvq-data", JSON.stringify(runtime.getInstanceByUid(486).getJsonDataCopy()));
 			console.log(runtime.getInstanceByUid(486).getJsonDataCopy())
+		},
+
+		async Egame_Event45_Act4(runtime, localVars)
+		{
+			AppInterface.sendToApp(runtime.getInstanceByUid(488).getJsonDataCopy());
 		},
 
 		async Etutorial_Event4_Act4(runtime, localVars)
@@ -110,7 +110,7 @@ export class AppInterface  {
 			
 		},
 
-		async Elevel4_Event89_Act4(runtime, localVars)
+		async Elevel4_Event87_Act4(runtime, localVars)
 		{
 			let data = JSON.parse(localStorage.getItem("pvq-data"));
 			runtime.globalVars.RewardPoints = data.totalRewards;

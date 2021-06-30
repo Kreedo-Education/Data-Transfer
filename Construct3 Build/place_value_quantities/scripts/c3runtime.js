@@ -3476,6 +3476,11 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 		C3.Plugins.Sprite.Acts.MoveToTop,
 		C3.Plugins.System.Cnds.ForEach,
 		C3.Plugins.Sprite.Cnds.IsBoolInstanceVarSet,
+		C3.Plugins.Sprite.Acts.Destroy,
+		C3.ScriptsInEvents.Egame_Event44_Act2,
+		C3.Plugins.Json.Acts.SetJSON,
+		C3.Plugins.Json.Exps.GetAsCompactString,
+		C3.ScriptsInEvents.Egame_Event45_Act4,
 		C3.Plugins.System.Cnds.IsGroupActive,
 		C3.Plugins.System.Acts.SetBoolVar,
 		C3.Plugins.Touch.Cnds.OnTapGestureObject,
@@ -3491,15 +3496,10 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 		C3.Plugins.System.Cnds.TriggerOnce,
 		C3.Plugins.Touch.Cnds.OnTouchStart,
 		C3.Plugins.Touch.Cnds.OnTouchEnd,
-		C3.Plugins.PlatformInfo.Cnds.IsOnMobile,
+		C3.Plugins.PlatformInfo.Cnds.IsCordovaExport,
 		C3.Plugins.Browser.Cnds.IsFullscreen,
 		C3.Plugins.Browser.Acts.RequestFullScreen,
 		C3.Behaviors.Anchor.Acts.SetEnabled,
-		C3.Plugins.Json.Acts.SetJSON,
-		C3.Plugins.Json.Exps.GetAsCompactString,
-		C3.ScriptsInEvents.Ehud_Event84_Act4,
-		C3.ScriptsInEvents.Ehud_Event85_Act2,
-		C3.Plugins.Browser.Acts.Close,
 		C3.Plugins.Text.Acts.SetText,
 		C3.Plugins.Browser.Exps.ExecJS,
 		C3.Plugins.Audio.Cnds.OnEnded,
@@ -3507,7 +3507,6 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 		C3.ScriptsInEvents.Etutorial_Event4_Act4,
 		C3.ScriptsInEvents.Etutorial_Event5_Act1,
 		C3.Plugins.System.Acts.RestartLayout,
-		C3.Plugins.Sprite.Acts.Destroy,
 		C3.Behaviors.DragnDrop.Cnds.OnDragStart,
 		C3.Plugins.Sprite.Cnds.CompareInstanceVar,
 		C3.Plugins.Touch.Exps.X,
@@ -3575,7 +3574,8 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 		C3.Plugins.Sprite.Acts.SubInstanceVar,
 		C3.ScriptsInEvents.Elevel3_Event104_Act4,
 		C3.Plugins.Timeline.Acts.PlayTimeline,
-		C3.ScriptsInEvents.Elevel4_Event89_Act4
+		C3.Plugins.Json.Exps.Get,
+		C3.ScriptsInEvents.Elevel4_Event87_Act4
 		];
 	};
 	self.C3_JsPropNameTable = [
@@ -4148,6 +4148,12 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 			const v2 = p._GetNode(2).GetVar();
 			return () => ((v0.GetValue() + (10 * v1.GetValue())) + (100 * v2.GetValue()));
 		},
+		() => "home",
+		() => "gameData",
+		p => {
+			const n0 = p._GetNode(0);
+			return () => n0.ExpObject(".");
+		},
 		p => {
 			const v0 = p._GetNode(0).GetVar();
 			const v1 = p._GetNode(1).GetVar();
@@ -4216,12 +4222,6 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 		() => "levelDetails.level3.presentation.timeSpent",
 		() => "levelDetails.level4.timeSpent",
 		() => "levelDetails.level4.presentation.timeSpent",
-		() => "home",
-		() => "gameData",
-		p => {
-			const n0 = p._GetNode(0);
-			return () => n0.ExpObject(".");
-		},
 		() => "L1TutorialPlay",
 		p => {
 			const v0 = p._GetNode(0).GetVar();
@@ -4957,19 +4957,19 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 			return () => ("PVQ_A_L2_89" + v0.GetValue());
 		},
 		() => "PVQ_A_L2_89",
-		() => "PVQ_A_L4_41",
-		() => 721,
+		() => "PVQ_A_L4_49",
+		() => 111,
 		() => "PVQ_A_L4_34",
 		() => "PVQ_A_L4_30",
 		() => "L4TutorialFunctions",
 		() => "Close",
 		() => 193,
+		() => 721,
 		p => {
 			const v0 = p._GetNode(0).GetVar();
 			return () => ("PVQ_A_L4_41" + v0.GetValue());
 		},
-		() => "PVQ_A_L4_49",
-		() => 111,
+		() => "PVQ_A_L4_41",
 		p => {
 			const v0 = p._GetNode(0).GetVar();
 			return () => ("PVQ_A_L4_49" + v0.GetValue());
@@ -4989,6 +4989,10 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 		() => "L4TutorialSave",
 		() => "L4",
 		() => "levelDetails.level4.completed",
+		p => {
+			const n0 = p._GetNode(0);
+			return () => add(n0.ExpObject(".completedCount"), 1);
+		},
 		() => "L4Functions",
 		() => 770,
 		() => 483,
