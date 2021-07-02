@@ -4562,7 +4562,6 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 		},
 		() => "GL_A_4",
 		() => "levelDetails.level1.completed",
-		() => "Confetti",
 		p => {
 			const v0 = p._GetNode(0).GetVar();
 			return () => (v0.GetValue() + 130);

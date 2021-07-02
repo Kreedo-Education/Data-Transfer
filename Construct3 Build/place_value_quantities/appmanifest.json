@@ -1,7 +1,7 @@
 {
 	"name": "PlaceValueQuantities",
 	"short_name": "PlaceValueQuantities",
-	"description": "",
+	"description": "A learning game for kids, Kids learns Place Value Quantities",
 	"start_url": "index.html",
 	"display": "fullscreen",
 	"orientation": "landscape",
