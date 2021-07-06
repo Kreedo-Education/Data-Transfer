@@ -11,7 +11,7 @@ There are two types of game's builds available for now: -
   ### For Unity ###
   #### [Play Game](https://kreedo-education.github.io/Data-Transfer/Unity%20Build/Web%20Build)
    #### [Zip Link](https://kreedo-education.github.io/Data-Transfer/Unity%20Build/web_build.zip)
-   #### [KMPH Zip Link](https://kreedo-education.github.io/Data-Transfer/Unity%20Build/build.zip)
+   #### [KMPH Zip Link](https://kreedo-education.github.io/Data-Transfer/Unity%20Build/kmph_web_build.zip)
    These are some steps that need to be followed for initial setup for Unity build
    1. Generate the WebGL build.
    2. Open index.html in any text editor.
