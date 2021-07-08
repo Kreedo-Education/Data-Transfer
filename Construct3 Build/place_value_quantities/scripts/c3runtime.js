@@ -4986,6 +4986,7 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 		() => "L4TutotrialButtons",
 		() => "L4GamePlay",
 		() => "L4TutorialSave",
+		() => "L4Buttons",
 		() => "L4",
 		() => "levelDetails.level4.completed",
 		p => {
@@ -5002,7 +5003,6 @@ bbox.getBottom();this._isEnabled=true;this._StartTicking()}}}};
 		() => "PVQ_A_L4_42",
 		() => "PVQ_A_L4_40",
 		() => "PVQ_A_L4_54",
-		() => "L4Buttons",
 		() => "L4Tweens",
 		() => "L4GamePlayMusicPlayBack"
 	];
