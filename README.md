@@ -155,8 +155,10 @@ Global Data List:
 6. endDateTime: string [The date an attempt ends]
 7. completed: boolean [Whether game is completed, i.e all levels are unlocked]
 8. isMusic: boolean  [Decides that whether to start the game with background music or not]
-9. rewardsPerLevel": number [set the rewards points to be given on complete of a level]
-10. lang: string [Set the audio language of the game]
+9. rewardsPerLevel": number [Sets the rewards points to be given on completion of a level]
+10. lang: string [Sets the audio language of the game]
+
+
 Local Data List: These are nothing but the logs which are captured for each attempts for all levels
 ``` 
 "level1":{
@@ -455,6 +457,7 @@ AppInterface.sendToApp(data);  // implements the logic to push the data to app.
 
 ```
 
-# Note: WebGL build need to be given. The build should handle the data transfer with app when being played in the App and as well as with browser when it is being played in the Browser. Developer will have to fix all types of error, that are found while testing it.
+# Note: WebGL builds need to be given. The build should handle the data transfer with the app when being played in the App and as well as with the browser when it is being played in the Browser. The developer will have to fix all types of errors, that are found while testing it.
+
 
 
