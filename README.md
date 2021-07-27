@@ -504,14 +504,18 @@ localStorage.setItem("pvq-data", JSON.stringify(data));
 AppInterface.sendToApp(data);  // implements the logic to push the data to app.
 
 ```
+
+# Testing the two way communication:-
+
 To Test the data communication, we have a test apk, please download and test through this app.
-Steps to check:
+Thesse are the Steps to test the communication.
 1. Download the [zip](https://kreedo-education.github.io/Data-Transfer/data-transfer-test.zip) file and extract it.
 2. Install the apk on your Android phone.
 3. Paste the zip path for the game build in the input text field.
 4. click on start button.
 5. wait for the game to finish download and extraction.
 6. The game will start and the app will send you start data through the the listener.
+7. when the game sends the json data to app, The app will show an alert with the data recieved by the app.
 
 # Note: WebGL builds need to be given. The build should handle the data transfer with the app when being played in the App and as well as with the browser when it is being played in the Browser. The developer will have to fix all types of errors, that are found while testing it.
 
