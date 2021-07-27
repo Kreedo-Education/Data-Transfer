@@ -51,9 +51,9 @@ We will be looking into all four tasks one by one.
       "gamePath":"https://kreedo-game-upload-poc.s3.us-east-2.amazonaws.com/701_LearningTeens.zip",
       "isActive":true,
       "isblocked":false,
-      "isGameDownloadComplete":true,
-      "gameName":"Place Value Quantities",
+      "isGameDownloadComplete":true,      
       "attemptId":0,
+      "gameName":"Place Value Quantities",
       "totalRewards":0,
       "completedCount":0,
       "startDateTime":"",
@@ -143,10 +143,49 @@ Data Format when exiting the game (Home -> Pick New Game Button Click) :-
 
 ## Data Fields
 There are two types of data fields being captured here:
-#### 1. Global Data:- These are used to resume the game
-#### 2. Local Data:- These are used for reporting purpose.
+1. Those data that willbe updated by APP
+  "learningTrackid":1,
+  "gameId":1,
+  "gameVersion":"string",
+  "predGameId":0,
+  "gamePath":"https://kreedo-game-upload-poc.s3.us-east-2.amazonaws.com/701_LearningTeens.zip",
+  "isActive":true,
+  "isblocked":false,
+  "isGameDownloadComplete":true,      
+  "attemptId":0,
+  "gameName": "Place Value Quantities"
 
-Global Data List:
+
+2. The data that will ensure the Resume functionalities:
+
+##### Lock Unlock of Levels 
+  Game "completed" field says that whether the game is completed at least once or not.
+  ```completed: 0```
+
+  Level Details  "currentLevel" object states that which is current maximum level opened in the last attempt and The presentation of that level was played or not.
+``` currentLevel":{"level":0,"presentationCompleted":0} ```
+
+There are two case we need to understand :
+ => If game is completed atleast once "completed" becomes 1.
+    then all levels will be unlocked.
+
+    if(completed == 1){
+      then unlock all levels
+    }
+
+=> if game is never completed, then we unlock levels based on the currentLevel.level value.
+  if(currentLevel.level == 3){
+    then unlock till level 3 and let the level 4 locked.
+  }
+
+##### Resume Level
+On start of the game, we check which was the maximum level opened in the last attempt. And we resume from there only. Each time we push our data to server/app we set the currentLevel object.
+There are two cases we need to under stand here too.
+
+On completion of the last level we set the currentLevel object as
+``` "currentLevel" :{level:1, presentationCompleted:1} ```
+This will ensure that that next time user starts this game It should start from Level1.
+
 1. gameName: string [:Contains the name of the game]
 2. attemptId: number [Contains the attempt Id]
 3. totalRewards: number [Total rewards points accumulated till now includes all replays ]
@@ -158,7 +197,16 @@ Global Data List:
 9. rewardsPerLevel": number [Sets the rewards points to be given on completion of a level]
 10. lang: string [Sets the audio language of the game]
 
-
+"learningTrackid":1,
+      "gameId":1,
+      "gameVersion":"string",
+      "predGameId":0,
+      "gamePath":"https://kreedo-game-upload-poc.s3.us-east-2.amazonaws.com/701_LearningTeens.zip",
+      "isActive":true,
+      "isblocked":false,
+      "isGameDownloadComplete":true,      
+      "attemptId":0,
+      "gameName":"Place Value Quantities",
 Local Data List: These are nothing but the logs which are captured for each attempts for all levels
 ``` 
 "level1":{
@@ -456,6 +504,14 @@ localStorage.setItem("pvq-data", JSON.stringify(data));
 AppInterface.sendToApp(data);  // implements the logic to push the data to app.
 
 ```
+To Test the data communication, we have a test apk, please download and test through this app.
+Steps to check:
+1. Download the zip file and extract it.
+2. Install the apk on your Android phone.
+3. Paste the zip path for the game build in the input text field.
+4. click on start button.
+5. wait for the game to finish download and extraction.
+6. The game will start and the app will send you start data through the the listener.
 
 # Note: WebGL builds need to be given. The build should handle the data transfer with the app when being played in the App and as well as with the browser when it is being played in the Browser. The developer will have to fix all types of errors, that are found while testing it.
 
