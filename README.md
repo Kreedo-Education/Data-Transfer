@@ -143,7 +143,7 @@ Data Format when exiting the game (Home -> Pick New Game Button Click) :-
 
 ## Data Fields
 There are two types of data fields being captured here:
-1. Those data that willbe updated by APP
+1. Those data that willbe updated by APP not by game.
   "learningTrackid":1,
   "gameId":1,
   "gameVersion":"string",
@@ -154,6 +154,7 @@ There are two types of data fields being captured here:
   "isGameDownloadComplete":true,      
   "attemptId":0,
   "gameName": "Place Value Quantities"
+
 
 
 2. The data that will ensure the Resume functionalities:
@@ -186,16 +187,15 @@ On completion of the last level we set the currentLevel object as
 ``` "currentLevel" :{level:1, presentationCompleted:1} ```
 This will ensure that that next time user starts this game It should start from Level1.
 
-1. gameName: string [:Contains the name of the game]
-2. attemptId: number [Contains the attempt Id]
-3. totalRewards: number [Total rewards points accumulated till now includes all replays ]
-4. completedCount: number [No. of times a game was completed, i.e all levels are completed]
-5. startDateTime: string [The date an attempt starts]
-6. endDateTime: string [The date an attempt ends]
-7. completed: boolean [Whether game is completed, i.e all levels are unlocked]
-8. isMusic: boolean  [Decides that whether to start the game with background music or not]
-9. rewardsPerLevel": number [Sets the rewards points to be given on completion of a level]
-10. lang: string [Sets the audio language of the game]
+1. totalRewards: number [Total rewards points accumulated till now includes all replays ]
+2. completedCount: number [No. of times a game was completed, i.e all levels are completed]
+3. startDateTime: string [The date an attempt starts]
+4. endDateTime: string [The date an attempt ends]
+5. completed: boolean [Whether game is completed, i.e all levels are unlocked]
+6. isMusic: boolean  [Decides that whether to start the game with background music or not]
+7. rewardsPerLevel": number [Sets the rewards points to be given on completion of a level]
+8. lang: string [Sets the audio language of the game]
+9. currentLevel [json] Contains the maximum unlocked level information [currentLevel" :{level:1, presentationCompleted:1}]
 
 "learningTrackid":1,
       "gameId":1,
@@ -511,11 +511,12 @@ To Test the data communication, we have a test apk, please download and test thr
 Thesse are the Steps to test the communication.
 1. Download the [zip](https://kreedo-education.github.io/Data-Transfer/data-transfer-test.zip) file and extract it.
 2. Install the apk on your Android phone.
-3. Paste the zip path for the game build in the input text field.
-4. click on start button.
-5. wait for the game to finish download and extraction.
-6. The game will start and the app will send you start data through the the listener.
-7. when the game sends the json data to app, The app will show an alert with the data recieved by the app.
+3. Make a zip of game files and upload on a server then take the zip path from there.
+4. Paste the zip path of the game in the input text field.
+5. click on start button.
+6. wait for the game to finish download and extraction.
+7. The game will start and the app will send you start data through the the listener.
+8. when the game sends the json data to app, The app will show an alert with the data recieved by the app.
 
 # Note: WebGL builds need to be given. The build should handle the data transfer with the app when being played in the App and as well as with the browser when it is being played in the Browser. The developer will have to fix all types of errors, that are found while testing it.
 
