@@ -504,6 +504,8 @@ localStorage.setItem("pvq-data", JSON.stringify(data));
 AppInterface.sendToApp(data);  // implements the logic to push the data to app.
 
 ```
+# Game Variable Initialization Flowchart-diagram.
+![Algorithm flowchart example](https://user-images.githubusercontent.com/79310045/143025712-fc29ec0c-0c36-4796-8c5a-7fe7496ee37a.png)
 
 # Testing the two way communication:-
 
