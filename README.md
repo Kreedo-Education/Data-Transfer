@@ -505,7 +505,8 @@ AppInterface.sendToApp(data);  // implements the logic to push the data to app.
 
 ```
 # Game Variable Initialization Flowchart-diagram.
-![Algorithm flowchart example](https://user-images.githubusercontent.com/79310045/143025712-fc29ec0c-0c36-4796-8c5a-7fe7496ee37a.png)
+![Algorithm flowchart example (1)](https://user-images.githubusercontent.com/79310045/143391639-7e04ed1b-2ec3-4b8a-84bf-9b3b33b890f3.png)
+
 
 # Testing the two way communication:-
 
